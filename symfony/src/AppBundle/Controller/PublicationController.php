@@ -13,10 +13,7 @@ class PublicationController extends Controller
 {
 
   public function indexAction(Request $request)
-  {
-    echo "home";
-    die();
-  }
+  {}
 }
 
 

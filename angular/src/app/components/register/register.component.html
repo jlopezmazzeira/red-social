@@ -1,0 +1,45 @@
+<div class="col-md-12">
+  <hr>
+  <h1>{{ sectionTitle }}</h1>
+  <hr>
+  <div class="alert alert-success" *ngIf="status == 'success'">
+    You have registered correctly, now you can identify yourself.
+    <a [routerLink]="['/login']">Login</a>
+  </div>
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    It has not been possible to register on the platform, try later
+  </div>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nameUser">Name</label>
+      <input type="text" class="form-control form-name" id="nameUser" name="name"
+      placeholder="Enter name" required #name="ngModel" [(ngModel)]="person.name">
+      <span *ngIf="!name.valid && name.touched">The name is mandatory</span>
+    </div>
+    <div class="form-group">
+      <label for="surnameUser">Surname</label>
+      <input type="text" class="form-control form-surname" id="surnameUser" name="surname"
+      placeholder="Enter surname" required #surname="ngModel" [(ngModel)]="person.surname">
+      <span *ngIf="!surname.valid && surname.touched">The surname is mandatory</span>
+    </div>
+    <div class="form-group">
+      <label for="nickUser">Nick</label>
+      <input type="text" class="form-control form-nick nick-input" id="nickUser" name="nick"
+      placeholder="Enter nick" required #nick="ngModel" [(ngModel)]="person.nick">
+      <span *ngIf="!nick.valid && nick.touched">The nick is mandatory</span>
+    </div>
+    <div class="form-group">
+      <label for="emailUser">Email address</label>
+      <input type="email" class="form-control form-email" id="emailUser" name="email"
+      placeholder="Enter email" required #email="ngModel" [(ngModel)]="person.email">
+      <span *ngIf="!email.valid && email.touched">The email address is mandatory</span>
+    </div>
+    <div class="form-group">
+    <label for="userPassword">Password</label>
+    <input type="password" class="form-control form-password" id="userPassword" name="password"
+    placeholder="Password" required #password="ngModel" [(ngModel)]="person.password">
+    <span *ngIf="!password.valid && password.touched">The password is mandatory</span>
+  </div>
+  <button type="submit" class="form-submit btn btn-primary">Submit</button>
+  </form>
+</div>
