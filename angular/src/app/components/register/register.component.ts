@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   public person: Person;
   public errorMessage;
   public status;
+  public statusNick;
 
   constructor(private _us: UserService,
               private route: ActivatedRoute,
@@ -30,6 +31,29 @@ export class RegisterComponent implements OnInit {
 
         if(this.status != "success"){
           this.status = "error";
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
+  }
+
+  verifyNick(){
+
+    this._us.verifyNick({nick:this.person.nick}).subscribe(
+      response => {
+        this.statusNick = response.status;
+        let x = document.getElementById("nickUser");
+        
+        if(this.statusNick != "success"){
+          x.style.border = "1px solid red";
+        } else {
+          x.style.border = "1px solid green";
         }
       },
       error => {

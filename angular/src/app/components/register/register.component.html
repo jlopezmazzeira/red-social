@@ -1,7 +1,4 @@
 <div class="col-md-12">
-  <hr>
-  <h1>{{ sectionTitle }}</h1>
-  <hr>
   <div class="alert alert-success" *ngIf="status == 'success'">
     You have registered correctly, now you can identify yourself.
     <a [routerLink]="['/login']">Login</a>
@@ -9,7 +6,9 @@
   <div class="alert alert-danger" *ngIf="status == 'error'">
     It has not been possible to register on the platform, try later
   </div>
-  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="box-form">
+    <h1>{{ sectionTitle }}</h1>
+    <hr>
     <div class="form-group">
       <label for="nameUser">Name</label>
       <input type="text" class="form-control form-name" id="nameUser" name="name"
@@ -25,7 +24,7 @@
     <div class="form-group">
       <label for="nickUser">Nick</label>
       <input type="text" class="form-control form-nick nick-input" id="nickUser" name="nick"
-      placeholder="Enter nick" required #nick="ngModel" [(ngModel)]="person.nick">
+      placeholder="Enter nick" required #nick="ngModel" [(ngModel)]="person.nick" (blur)="verifyNick()">
       <span *ngIf="!nick.valid && nick.touched">The nick is mandatory</span>
     </div>
     <div class="form-group">

@@ -105,6 +105,38 @@ class UserController extends Controller
     }
     return $helpers->json($data);
   }
+
+  public function nickTestAction(Request $request)
+  {
+    $helpers = $this->get("app.helpers");
+
+    $json = $request->get("json", null);
+    $params = json_decode($json);
+
+    $data = array(
+      'status' => 'error',
+      'code' => 400,
+      'msg' => 'Nick duplicated!!'
+    );
+
+    if ($json != null) {
+      $nick = (isset($params->nick)) ? $params->nick : null;
+      $em = $this->getDoctrine()->getManager();
+      $userRepo = $em->getRepository("BackendBundle:User");
+      $userIsset = $userRepo->findBy(array('nick' => $nick));
+
+      if (count($userIsset) == 0) {
+        $data = array(
+          'status' => 'success',
+          'code' => 200,
+          'msg' => 'Nick unused!!'
+        );
+      }
+
+    }
+    
+    return $helpers->json($data);
+  }
 }
 
 
