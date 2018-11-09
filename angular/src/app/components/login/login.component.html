@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+<div class="col-md-4">
+  <div class="alert alert-success" *ngIf="status == 'success'">
+    You have registered correctly, now you can identify yourself.
+    <a [routerLink]="['/index']">Login</a>
+  </div>
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    It has not been possible to register on the platform, try later
+  </div>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="box-form">
+    <h1>{{ sectionTitle }}</h1>
+    <hr>
+    <div class="form-group">
+      <label for="emailUser">Email address</label>
+      <input type="email" class="form-control form-email" id="emailUser" name="email"
+      placeholder="Enter email" required #email="ngModel" [(ngModel)]="user.email">
+      <span *ngIf="!email.valid && email.touched">The email address is mandatory</span>
+    </div>
+    <div class="form-group">
+    <label for="userPassword">Password</label>
+    <input type="password" class="form-control form-password" id="userPassword" name="password"
+    placeholder="Password" required #password="ngModel" [(ngModel)]="user.password">
+    <span *ngIf="!password.valid && password.touched">The password is mandatory</span>
+  </div>
+  <button type="submit" class="form-submit btn btn-primary">Submit</button>
+  </form>
+</div>

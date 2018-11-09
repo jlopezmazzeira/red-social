@@ -1,7 +1,6 @@
 <div class="col-md-12">
   <div class="alert alert-success" *ngIf="status == 'success'">
     You have registered correctly, now you can identify yourself.
-    <a [routerLink]="['/login']">Login</a>
   </div>
   <div class="alert alert-danger" *ngIf="status == 'error'">
     It has not been possible to register on the platform, try later
@@ -38,6 +37,11 @@
       <input type="password" class="form-control form-password" id="userPassword" name="password"
       placeholder="Password" required #password="ngModel" [(ngModel)]="person.password">
       <span *ngIf="!password.valid && password.touched">The password is mandatory</span>
+    </div>
+    <div class="form-group">
+      <label for="userBio">Bio</label>
+      <textarea class="form-control"name="bio" id="userBio" rows="8" cols="80"
+      #bio="ngModel" [(ngModel)]="person.bio"></textarea>
     </div>
     <button type="submit" class="form-submit btn btn-primary">Submit</button>
   </form>

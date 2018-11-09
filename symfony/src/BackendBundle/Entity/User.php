@@ -89,20 +89,20 @@ class User
       return $this->email;
     }
 
-    public function getSalt()
+    /*public function getSalt()
     {
       return null;
-    }
+    }*/
 
     public function getRoles()
     {
       return $this->getRole();
     }
 
-    public function eraseCredentials()
+    /*public function eraseCredentials()
     {
       // code...
-    }
+    }*/
 
     public function __toString()
     {

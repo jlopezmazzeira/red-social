@@ -18,18 +18,48 @@ class UserController extends Controller
 
   public function loginAction(Request $request)
   {
-    $helpers = $this->get("app.helpers");
+    $helpers = $this->get('app.helpers');
+    $jwtAuth = $this->get('app.jwt_auth');
 
     $json = $request->get("json", null);
-    $params = json_decode($json);
 
-    $data = array(
-      'status' => 'error',
-      'code' => 400,
-      'msg' => 'User not created!!'
-    );
+    if ($json != null) {
+      $params = json_decode($json);
 
-    return $helpers->json($data);
+      $email = (isset($params->email)) ? $params->email : null;
+      $password = (isset($params->password)) ? $params->password : null;
+      $getHash = (isset($params->gethash)) ? $params->gethash : null;
+
+      $emailContraint = new Assert\Email();
+      $emailContraint->message = "This email is not valid!";
+
+      $validateEmail = $this->get("validator")->validate($email, $emailContraint);
+
+      //cifrar password
+      $pwd = hash('sha256', $password);
+
+      if (count($validateEmail) == 0 && $password != null) {
+
+        if ($getHash == null || !$getHash) {
+          $signup = $jwtAuth->signup($email, $pwd, false);
+        } else {
+          $signup = $jwtAuth->signup($email, $pwd, true);
+        }
+
+        return new JsonResponse($signup);
+      } else {
+        return $helpers->json(array(
+          'status' => 'error',
+          'data' => 'Login not valid!!'
+        ));
+
+      }
+    } else {
+      return $helpers->json(array(
+        'status' => 'error',
+        'data' => 'Send json with post!!'
+      ));
+    }
   }
 
   public function registerAction(Request $request)
@@ -69,10 +99,11 @@ class UserController extends Controller
         $userIsset = $query->getResult();
         if (count($userIsset) == 0) {
           $user = new User();
-          $factory = $this->get("security.encoder_factory");
+          /*$factory = $this->get("security.encoder_factory");
           $encoder = $factory->getEncoder($user);
 
-          $password = $encoder->encodePassword($password, $user->getSalt());
+          $password = $encoder->encodePassword($password, $user->getSalt());*/
+          $password = hash('sha256', $password);
 
           $user->setRole($role);
           $user->setName($name);
@@ -134,8 +165,28 @@ class UserController extends Controller
       }
 
     }
-    
+
     return $helpers->json($data);
+  }
+
+  public function editUser(Request $request)
+  {
+    $helpers = $this->get("app.helpers");
+
+    $json = $request->get("json", null);
+    $params = json_decode($json);
+
+    $data = array(
+      'status' => 'error',
+      'code' => 400,
+      'msg' => 'Nick duplicated!!'
+    );
+
+    if ($json != null) {
+      
+    }
+    return $helpers->json($data);
+
   }
 }
 

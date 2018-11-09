@@ -22,6 +22,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.person = new Person(1, "user", "", "", "", "", "", "", "", "");
+    let ide = this._us.getIdentity();
+    if(ide != null && ide.sub){
+      this.router.navigate(["/profile"]);
+    }
   }
 
   onSubmit(){
@@ -49,7 +53,7 @@ export class RegisterComponent implements OnInit {
       response => {
         this.statusNick = response.status;
         let x = document.getElementById("nickUser");
-        
+
         if(this.statusNick != "success"){
           x.style.border = "1px solid red";
         } else {
