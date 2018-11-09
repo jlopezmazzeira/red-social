@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpComponent implements OnInit {
 
+  public sectionTitle = 'Help';
+
   constructor() { }
 
   ngOnInit() {

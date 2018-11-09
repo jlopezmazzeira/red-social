@@ -15,6 +15,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PeopleComponent } from './components/people/people.component';
 import { SearchComponent } from './components/search/search.component';
 import { MessageComponent } from './components/message/message.component';
+import { FollowComponent } from './components/follow/follow.component';
+import { NotificationComponent } from './components/notification/notification.component';
 import { HelpComponent } from './components/help/help.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
 
@@ -40,7 +42,9 @@ import { SearchService } from './services/search/search.service';
     HomeComponent,
     PeopleComponent,
     SearchComponent,
-    MessageComponent
+    MessageComponent,
+    NotificationComponent,
+    FollowComponent
   ],
   imports: [
     BrowserModule,

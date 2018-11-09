@@ -12,7 +12,7 @@ import { GLOBAL } from '../../services/global';
 })
 export class EditUserComponent implements OnInit {
 
-  public titulo:string = "Configuration";
+  public sectionTitle:string = "Configuration";
   public person: Person;
   public errorMessage;
   public status;

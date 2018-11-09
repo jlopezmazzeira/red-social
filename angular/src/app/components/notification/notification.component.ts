@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationComponent implements OnInit {
 
+  public sectionTitle = 'Notifications';
+
   constructor() { }
 
   ngOnInit() {
