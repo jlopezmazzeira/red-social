@@ -24,11 +24,14 @@ export const routes: Routes = [
   { path: 'configuration', component: EditUserComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'people', component: PeopleComponent },
+  { path: 'people/:page', component: PeopleComponent },
   { path: 'notifications', component: NotificationComponent },
   { path: 'messages', component: MessageComponent },
   { path: 'following', component: FollowComponent },
   { path: 'user/:nick', component: ProfileComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'search/:search', component: SearchComponent },
+  { path: 'search/:search/:page', component: SearchComponent },
   { path: 'help', component: HelpComponent },
   { path: '**', component: NopagefoundComponent }
 ];

@@ -1,9 +1,9 @@
-<div class="col-md-12">
+<div class="col-lg-8">
   <div class="alert alert-success" *ngIf="status == 'success'">
-    You have registered correctly, now you can identify yourself.
+    Your data has been updated correctly.
   </div>
   <div class="alert alert-danger" *ngIf="status == 'error'">
-    It has not been possible to register on the platform, try later
+    It has not been possible to update your data, try later.
   </div>
   <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="box-form">
     <h1>{{ sectionTitle }}</h1>
@@ -45,4 +45,24 @@
     </div>
     <button type="submit" class="form-submit btn btn-primary">Submit</button>
   </form>
+</div>
+<div class="col-lg-4 box">
+  <h2>{{ sectionAvatar }}</h2>
+  <hr>
+  <div class="form-group">
+    <label for="userImage">Avatar</label>
+    <input type="file" placeholder="Subir Imagen" (change)="fileChangeEvent($event)">
+  </div>
+  <div class="progress">
+    <div id="upload-progress-bar"
+         class="progress-bar progress-bar-success"
+         role="progress-bar"
+         aria-valuenow="0"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         style="width: 0%;"
+         >
+    </div>
+  </div>
+  <p id="status"></p>
 </div>

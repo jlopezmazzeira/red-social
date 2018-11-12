@@ -13,11 +13,13 @@ import { GLOBAL } from '../../services/global';
 export class EditUserComponent implements OnInit {
 
   public sectionTitle:string = "Configuration";
+  public sectionAvatar:string = "Change your avatar";
   public person: Person;
   public errorMessage;
   public status;
   public identity;
   public newPwd;
+  public statusNick;
 
   constructor(private _us: UserService,
               private _ups: UploadService,
@@ -58,10 +60,7 @@ export class EditUserComponent implements OnInit {
           if(this.status != "success"){
             this.status = "error";
           } else {
-            if(this.newPwd == this.identity.password){
-              this.person.password = this.identity.password;
-            }
-
+            this.person = response.user;
             localStorage.setItem("identity", JSON.stringify(this.person));
           }
         },
@@ -78,19 +77,45 @@ export class EditUserComponent implements OnInit {
     public fileToUpload: Array<File>;
     public resultUpload;
     fileChangeEvent(fileInput: any){
-      /*this.fileToUpload = <Array<File>>fileInput.target.files;
+      this.fileToUpload = <Array<File>>fileInput.target.files;
 
       let token = this._us.getToken();
-      let url = GLOBAL.url_user+"upload-image-user";
+      let url = GLOBAL.url_upload_avatar;
       this._ups.makeFileRequest(token, url, ['image'], this.fileToUpload).then(
         (result) => {
           this.resultUpload = result;
+          this.identity = this.resultUpload.user;
+          localStorage.setItem("identity", JSON.stringify(this.identity));
           console.log(this.resultUpload);
         },
         (error) => {
             console.log(error);
         }
-      );*/
+      );
+    }
+
+    verifyNick(){
+      if(this.person.nick != this.identity.nick){
+        this._us.verifyNick({nick:this.person.nick}).subscribe(
+          response => {
+            this.statusNick = response.status;
+            let x = document.getElementById("nickUser");
+
+            if(this.statusNick != "success"){
+              x.style.border = "1px solid red";
+            } else {
+              x.style.border = "1px solid green";
+            }
+          },
+          error => {
+            this.errorMessage = <any>error;
+            if(this.errorMessage != null){
+              console.log(this.errorMessage);
+              alert('Error en la petición');
+            }
+          }
+        );
+      }
     }
 
 }

@@ -70,9 +70,18 @@ export class UserService {
   update_user(user_to_update: Person){
     let json = user_to_update;
     let params = JSON.stringify(json);
-    params = "json="+params;
+    params = "json="+params+"&authorization="+this.getToken();
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    return this._http.post(GLOBAL.url_register, params, {headers: headers})
+    return this._http.post(GLOBAL.url_update, params, {headers: headers})
                       .pipe(map(res => res.json()));
+  }
+
+  users_list(page = null){
+    if(page == null){
+      page = 1;
+    }
+
+    return this._http.get(GLOBAL.url_users+"?page="+page)
+                        .pipe(map(res => res.json()));
   }
 }

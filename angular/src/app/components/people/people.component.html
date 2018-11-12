@@ -1,6 +1,46 @@
 <div class="row">
   <div class="col-lg-12 box">
     <h2>{{ sectionTitle }}</h2>
+    <div class="count">
+      <span class="label label-primary">
+        Total of people: {{ total_items }}
+      </span>
+    </div>
     <hr>
+    <div class="box-content box-users">
+      <div class="loader" *ngIf="loading == 'show'">
+        <img src="assets/images/ajax-loader.gif">
+      </div>
+      <div class="col-lg-12 user-item" *ngFor="let user of people">
+        <div class="avatar">
+          <img src="{{url_image}}/{{user.image}}" *ngIf="user.image">
+          <img src="assets/images/default.png" *ngIf="!user.image">
+        </div>
+        <div class="user-item-content">
+          <p>{{ user.name }} {{ user.surname}} - {{ user.nick }}</p>
+          <p>{{ user.bio }}</p>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <ul class="pagination">
+      <li>
+        <a [routerLink]="['/people', pagePrev]" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li *ngFor="let page of pages">
+        <a [routerLink]="['/people', page + 1]">
+          <span aria-hidden="true">{{ page + 1 }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/people', pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>

@@ -17,3 +17,18 @@ user_edit:
     path:     /configuration
     defaults: { _controller: AppBundle:User:editUser }
     methods: POST
+
+user_upload_image:
+    path: /upload-image-user
+    defaults: { _controller: "AppBundle:User:uploadImage" }
+    methods: POST
+
+users_list:
+    path: /people
+    defaults: { _controller: "AppBundle:User:users" }
+    methods: GET
+
+user_search:
+    path: /search/{search}
+    defaults: { _controller: "AppBundle:User:search", search: null }
+    methods: GET

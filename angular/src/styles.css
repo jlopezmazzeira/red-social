@@ -2,6 +2,22 @@
 body{
   background: #eee;
 }
+
+.navbar-collapse .avatar{
+  background: white;
+  border-radius: 500px;
+  width: 30px;
+  height: 30px;
+  float: left;
+  margin-right: 12px;
+  margin-top: -5px;
+  overflow: hidden;
+}
+
+.navbar-collapse .avatar img{
+  height: 100%;
+  text-align: center;
+}
 /*Registro*/
 .box-form{
   background: white;
@@ -22,4 +38,23 @@ body{
   padding: 20px;
   padding-top: 0px;
   margin: 0 auto;
+}
+
+.user-item .avatar{
+  background: #eee;
+  border-radius: 500px;
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  float: left;
+}
+
+.user-item .avatar img{
+  height: 100%;
+  text-align: center;
+}
+
+.user-item .user-item-content{
+  padding: 10px;
+  margin-left: 85px;
 }
