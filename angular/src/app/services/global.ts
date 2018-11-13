@@ -9,5 +9,8 @@ export var GLOBAL = {
 	url_users: url+'people',
   url_login: url+'login',
 	url_nick: url+'nick-test',
+	url_follow: url+'follow',
+	url_unfollow: url+'unfollow',
+	url_following: url+'following',
 	ip: '127.0.0.1',
 };

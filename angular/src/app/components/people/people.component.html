@@ -12,16 +12,28 @@
         <img src="assets/images/ajax-loader.gif">
       </div>
       <div class="col-lg-12 user-item" *ngFor="let user of people">
-        <div class="avatar">
-          <img src="{{url_image}}/{{user.image}}" *ngIf="user.image">
-          <img src="assets/images/default.png" *ngIf="!user.image">
+        <div class="car-item" *ngIf="user.id != identity.id">
+          <div class="avatar">
+            <img src="{{url_image}}/{{user.image}}" *ngIf="user.image">
+            <img src="assets/images/default.png" *ngIf="!user.image">
+          </div>
+          <div class="user-item-content">
+            <p>{{ user.name }} {{ user.surname}} - {{ user.nick }}</p>
+            <p>{{ user.bio }}</p>
+          </div>
+          <div class="pull-right buttons-following">
+            <button *ngIf="!user.f" type="button" class="btn btn-sm btn-success btn-follow" (click)="follow(user)">
+              <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+              Follow
+            </button>
+            <button *ngIf="user.f" type="button" class="btn btn-sm btn-defualt btn-Unfollow" (click)="unfollow(user)">
+              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+              Unfollow
+            </button>
+          </div>
+          <div class="clearfix"></div>
+          <hr>
         </div>
-        <div class="user-item-content">
-          <p>{{ user.name }} {{ user.surname}} - {{ user.nick }}</p>
-          <p>{{ user.bio }}</p>
-        </div>
-        <div class="clearfix"></div>
-        <hr>
       </div>
     </div>
     <div class="clearfix"></div>

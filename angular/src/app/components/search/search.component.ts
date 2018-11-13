@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { SearchService } from '../../services/search/search.service';
 import { UserService } from '../../services/user/user.service';
+import { FollowService } from '../../services/follow/follow.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
@@ -17,6 +18,8 @@ export class SearchComponent implements OnInit {
   public people;
   public errorMessage;
   public status;
+  public statusFollow;
+  public statusUnfollow;
   public url_image;
   public loading;
   public pages;
@@ -25,9 +28,11 @@ export class SearchComponent implements OnInit {
   public total_pages = 0;
   public total_items = 0;
   public search_string: string;
+  public following;
 
   constructor(private _ss: SearchService,
               private _us: UserService,
+              private _fs: FollowService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -37,6 +42,34 @@ export class SearchComponent implements OnInit {
     this.token = this._us.getToken();
     this.url_image = GLOBAL.url_avatar;
     this.getSearchPeople();
+  }
+
+  getFollowing(){
+    this._fs.following_user(this.token).subscribe(
+      response => {
+        this.status = response.status;
+
+        if(this.status == "success"){
+          this.following = response.following;
+          for (var i in this.following){
+            let f = +this.following[i].followed.id;
+            for(var j in this.people) {
+              let p = +this.people[j].id;
+              if(f == p){
+                this.people[j].f = true;
+              }
+            }
+          }
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
   }
 
   getSearchPeople(){
@@ -83,6 +116,7 @@ export class SearchComponent implements OnInit {
                 } else {
                   this.pageNext = page;
                 }
+                this.getFollowing();
             }
           },
           error => {
@@ -93,6 +127,42 @@ export class SearchComponent implements OnInit {
             }
           }
         );
+      }
+    );
+  }
+
+  follow(followed){
+    this._fs.follow_user(this.token, {following_id:followed.id}).subscribe(
+      response => {
+        this.statusFollow = response.status;
+
+        if(this.statusFollow != "success"){
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
+  }
+
+  unfollow(followed){
+    this._fs.unfollow_user(this.token, {following_id:followed.id}).subscribe(
+      response => {
+        this.statusFollow = response.status;
+
+        if(this.statusFollow != "success"){
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
       }
     );
   }
