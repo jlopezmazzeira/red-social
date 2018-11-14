@@ -51,14 +51,29 @@ export class SearchComponent implements OnInit {
 
         if(this.status == "success"){
           this.following = response.following;
-          for (var i in this.following){
-            let f = +this.following[i].followed.id;
-            for(var j in this.people) {
-              let p = +this.people[j].id;
-              if(f == p){
-                this.people[j].f = true;
+          if(this.following.length == 0){
+            var btn_unfollow = document.getElementsByClassName("btn-unfollow");
+            for(var l = 0; l < btn_unfollow.length; l++)
+                btn_unfollow[l].className += " hidden";
+          } else {
+            var btn_unfollow = document.getElementsByClassName("btn-unfollow");
+            for(var l = 0; l < btn_unfollow.length; l++)
+                btn_unfollow[l].className += " hidden";
+
+            for (var i in this.following){
+              let f = +this.following[i].followed.id;
+              for(var j in this.people) {
+                let p = +this.people[j].id;
+                if(f == p){
+                  var btn_follow = document.getElementById("btn-follow-"+p);
+                  btn_follow.className += " hidden";
+
+                  var btn_unfollow_u = document.getElementById("btn-unfollow-"+p);
+                  btn_unfollow_u.classList.remove("hidden");
+                }
               }
             }
+
           }
         }
       },
@@ -137,6 +152,11 @@ export class SearchComponent implements OnInit {
         this.statusFollow = response.status;
 
         if(this.statusFollow != "success"){
+          var btn_follow = document.getElementById("btn-follow-"+followed.id);
+          btn_follow.className += " hidden";
+
+          var btn_unfollow = document.getElementById("btn-unfollow-"+followed.id);
+          btn_unfollow.classList.remove("hidden");
         }
       },
       error => {
@@ -152,9 +172,14 @@ export class SearchComponent implements OnInit {
   unfollow(followed){
     this._fs.unfollow_user(this.token, {following_id:followed.id}).subscribe(
       response => {
-        this.statusFollow = response.status;
+        this.statusUnfollow = response.status;
 
-        if(this.statusFollow != "success"){
+        if(this.statusUnfollow != "success"){
+          var btn_follow = document.getElementById("btn-follow-"+followed.id);
+          btn_follow.classList.remove("hidden");
+
+          var btn_unfollow = document.getElementById("btn-unfollow-"+followed.id);
+          btn_unfollow.className += " hidden";
         }
       },
       error => {

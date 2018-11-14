@@ -49,14 +49,22 @@ export class PeopleComponent implements OnInit {
 
         if(this.status == "success"){
           this.following = response.following;
-          for (var i in this.following){
-            let f = +this.following[i].followed.id;
-            for(var j in this.people) {
-              let p = +this.people[j].id;
-              if(f == p){
-                this.people[j].f = true;
+          if(this.following.length == 0){
+            this.hideAll();
+          } else {
+            this.hideAll();
+
+            for (var i in this.following){
+              let f = +this.following[i].followed.id;
+              for(var j in this.people) {
+                let p = +this.people[j].id;
+                if(f == p){
+                  this.hideBtn("btn-follow-"+p);
+                  this.showBtn("btn-unfollow-"+p);
+                }
               }
             }
+
           }
         }
       }
@@ -120,13 +128,8 @@ export class PeopleComponent implements OnInit {
         this.statusFollow = response.status;
 
         if(this.statusFollow == "success"){
-          //this.getPeople();
-          //followed.f = true;
-          //this.router.navigate(["/people", this.page_actual]);
-          //document.getElementById("follow").style.display = "none";
-          //var el = document.querySelector('#follow');
-          //el.style.display = "none";
-          //window.location.href = "/people/"+this.page_actual;
+          this.hideBtn("btn-follow-"+followed.id);
+          this.showBtn("btn-unfollow-"+followed.id);
         }
 
       },
@@ -143,18 +146,11 @@ export class PeopleComponent implements OnInit {
   unfollow(followed){
     this._fs.unfollow_user(this.token, {following_id:followed.id}).subscribe(
       response => {
-        this.statusFollow = response.status;
-
+        this.statusUnfollow = response.status;
         if(this.statusUnfollow == "success"){
-          //var el = document.querySelector('#unfollow');
-        //  el.style.display = "none";
-          //followed.f = false;
-          //this.getPeople();
-          //document.getElementById("unfollow").style.display = "none";
-          //window.location.href = "/people/"+this.page_actual;
-          //this.router.navigate(["/people", this.page_actual]);
+          this.showBtn("btn-follow-"+followed.id);
+          this.hideBtn("btn-unfollow-"+followed.id);
         }
-        //this.getFollowing();
       },
       error => {
         this.errorMessage = <any>error;
@@ -164,6 +160,22 @@ export class PeopleComponent implements OnInit {
         }
       }
     );
+  }
+
+  hideAll(){
+    var btn_unfollow = document.getElementsByClassName("btn-unfollow");
+    for(var l = 0; l < btn_unfollow.length; l++)
+        btn_unfollow[l].className += " hidden";
+  }
+
+  showBtn(element: string){
+    var btn = document.getElementById(element);
+    btn.classList.remove("hidden");
+  }
+
+  hideBtn(element: string){
+    var btn = document.getElementById(element);
+    btn.className += " hidden";
   }
 
 }

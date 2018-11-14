@@ -22,11 +22,11 @@
             <p>{{ user.bio }}</p>
           </div>
           <div class="pull-right buttons-following">
-            <button *ngIf="!user.f" type="button" class="btn btn-sm btn-success btn-follow" (click)="follow(user)">
+            <button type="button" id="btn-follow-{{user.id}}" class="btn btn-sm btn-success btn-follow" (click)="follow(user)">
               <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
               Follow
             </button>
-            <button *ngIf="user.f" type="button" class="btn btn-sm btn-defualt btn-Unfollow" (click)="unfollow(user)">
+            <button type="button" id="btn-unfollow-{{user.id}}" class="btn btn-sm btn-defualt btn-unfollow" (click)="unfollow(user)">
               <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
               Unfollow
             </button>
