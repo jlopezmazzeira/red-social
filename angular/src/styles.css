@@ -58,3 +58,46 @@ body{
   padding: 10px;
   margin-left: 85px;
 }
+
+#timeline{
+    margin-right: 20px;
+    min-height: 750px;
+    padding-bottom: 20px;
+}
+
+#card-user{
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+#card-user .avatar{
+  background: #eee;
+  border-radius: 500px;
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  float: left;
+}
+
+#card-user .avatar img{
+  height: 100%;
+  text-align: center;
+}
+
+#card-user .avatar img.defualt{
+  opacity: 0.5;
+}
+
+#card-user .name-surname{
+  float: left;
+  font-size: 20px;
+  padding: 10px;
+}
+
+#card-user .name-surname a{
+  color: black;
+}
+
+#card-user .nickname{
+  opacity: 0.7
+}
