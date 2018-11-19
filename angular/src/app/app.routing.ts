@@ -18,6 +18,7 @@ import { NopagefoundComponent } from './components/nopagefound/nopagefound.compo
 export const routes: Routes = [
   { path: '', component: PublicationComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'home/:page', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/:id', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

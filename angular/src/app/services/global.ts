@@ -12,5 +12,7 @@ export var GLOBAL = {
 	url_follow: url+'follow',
 	url_unfollow: url+'unfollow',
 	url_following: url+'following',
+	url_create: url+'create',
+	url_list: url+'list',
 	ip: '127.0.0.1',
 };

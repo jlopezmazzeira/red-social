@@ -40,7 +40,8 @@ body{
   margin: 0 auto;
 }
 
-.user-item .avatar{
+.user-item .avatar,
+.publication-item .avatar{
   background: #eee;
   border-radius: 500px;
   width: 75px;
@@ -49,12 +50,14 @@ body{
   float: left;
 }
 
-.user-item .avatar img{
+.user-item .avatar img,
+.publication.avatar img{
   height: 100%;
   text-align: center;
 }
 
-.user-item .user-item-content{
+.user-item .user-item-content,
+.publication-item .publication-item-content{
   padding: 10px;
   margin-left: 85px;
 }
@@ -100,4 +103,13 @@ body{
 
 #card-user .nickname{
   opacity: 0.7
+}
+
+.pub-name-link{
+  font-weight: bold;
+  color: black;
+}
+
+.pub-date{
+  color: gray;
 }

@@ -354,6 +354,7 @@ class UserController extends Controller
     $em = $this->getDoctrine()->getManager();
 
     if ($search != null) {
+      $search = trim($search);
       $dql = "SELECT u FROM BackendBundle:User u WHERE u.name LIKE :search OR u.surname LIKE :search OR u.nick LIKE :search ORDER BY u.id DESC";
       $query = $em->createQuery($dql)->setParameter("search", "%$search%");
     } else {
@@ -373,7 +374,7 @@ class UserController extends Controller
       'total_items_count' => $total_items_count,
       'page_actual' => $page,
       'items_per_page' => $items_per_page,
-      'total_pages' => ceil($items_per_page / $items_per_page),
+      'total_pages' => ceil($total_items_count / $items_per_page),
       'data' => $pagination
     );
 

@@ -28,6 +28,7 @@ import { FollowService } from './services/follow/follow.service';
 import { LikeService } from './services/like/like.service';
 import { MessageService } from './services/message/message.service';
 import { SearchService } from './services/search/search.service';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SearchService } from './services/search/search.service';
     SearchComponent,
     MessageComponent,
     NotificationComponent,
-    FollowComponent
+    FollowComponent,
+    DatePipe
   ],
   imports: [
     BrowserModule,
