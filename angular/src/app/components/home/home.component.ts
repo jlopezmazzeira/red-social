@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   public total_items = 0;
   public total_pages = 0;
   public status;
+  public statusPublication;
 
   constructor(private _us: UserService,
               private _ps: PublicationService,
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
         //this.page_actual = page;
         this.loading = 'show';
 
-        this._ps.publications_list(this.token,page).subscribe(
+        this._ps.list_publications(this.token,page).subscribe(
           response => {
             this.status = response.status;
             if(this.status == "success"){
@@ -115,6 +116,30 @@ export class HomeComponent implements OnInit {
             }
           }
         );
+      }
+    );
+  }
+
+  deletePublication(id: number){
+    let publication_panel = <HTMLElement>document.querySelector(".publication-panel-"+id);
+
+    if(publication_panel != null){
+      publication_panel.style.display = "none";
+    }
+
+    this._ps.delete_publication(this.token, id).subscribe(
+      response => {
+        this.statusPublication = response.status;
+        if(this.statusPublication != 'success'){
+          this.statusPublication = 'error';
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+            if(this.errorMessage != null){
+              console.log(this.errorMessage);
+              alert('Error en la petición');
+            }
       }
     );
   }

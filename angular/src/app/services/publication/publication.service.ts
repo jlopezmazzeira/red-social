@@ -73,7 +73,7 @@ export class PublicationService {
     });
   }
 
-  publications_list(token:string, page = null){
+  list_publications(token:string, page = null){
     if(page == null){
       page = 1;
     }
@@ -82,5 +82,12 @@ export class PublicationService {
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
     return this._http.post(GLOBAL.url_list+"?page="+page, params, {headers: headers})
                         .pipe(map(res => res.json()));
+  }
+
+  delete_publication(token: string, publication_id: number){
+  	let params = "&authorization="+token;
+    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+    return this._http.post(GLOBAL.url_delete+publication_id, params, {headers: headers})
+                      .pipe(map(res => res.json()));
   }
 }

@@ -51,7 +51,7 @@ class PublicationController extends Controller
               $ext = $image->guessExtension();
               if ($ext == 'jpeg' || $ext == 'png' || $ext == 'jpg' || $ext == 'gif') {
                   $file_name = time()."_image.".$ext;
-                  $image->move("uploads/users", $file_name);
+                  $image->move("uploads/publications/images", $file_name);
                   $publication->setImage($file_name);
               }
             }
@@ -61,7 +61,7 @@ class PublicationController extends Controller
               $ext = $document->guessExtension();
               if ($ext == 'jpeg' || $ext == 'png' || $ext == 'jpg' || $ext == 'gif') {
                   $file_name = time()."_document.".$ext;
-                  $document->move("uploads/users", $file_name);
+                  $document->move("uploads/publications/documents", $file_name);
                   $publication->setDocument($file_name);
               }
             }
@@ -86,7 +86,7 @@ class PublicationController extends Controller
     return $helpers->json($data);
   }
 
-  public function deleteAction(Request $request)
+  public function deleteAction(Request $request, $id = null)
   {
     $helpers = $this->get("app.helpers");
 
@@ -108,14 +108,14 @@ class PublicationController extends Controller
           "id" => $identity->sub
         ));
 
-        $json = $request->get("json", null);
-        $params = json_decode($json);
+        //$json = $request->get("json", null);
+        //$params = json_decode($json);
 
-        if ($json != null) {
+        //if ($json != null) {
             $publication_repo = $em->getRepository('BackendBundle:Publication');
-            $publication = $publication_repo->findOneBy(array(
+            $publication = $publication_repo->find(array(
               "user" => $user,
-              //"followed" => $params->following_id
+              "id" => $id
             ));
 
             $em->remove($publication);
@@ -126,7 +126,7 @@ class PublicationController extends Controller
               'code' => 200,
               'msg' => 'Deleted publication!!'
             );
-        }
+        //}
 
     } else {
         $data = array(

@@ -6,10 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DatePipe implements PipeTransform {
 
   transform(value): string {
-    let date = new Date(value * 1000);
+    let date:any = new Date(value * 1000);
 
-    let hoy = new Date();
-    let tiempoPasado= hoy - date
+    let hoy:any = new Date();
+    let tiempoPasado:any = hoy - date;
     let segs = 1000;
     let mins = segs * 60;
     let hours = mins * 60;

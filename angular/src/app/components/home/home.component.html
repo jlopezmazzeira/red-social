@@ -4,22 +4,41 @@
     <hr>
     <div class="box-content">
       <div *ngFor="let p of publications" class="publication-item col-lg-12">
-        <div class="avatar">
-          <img src="{{url_avatar}}/{{identity.image}}" *ngIf="identity.image">
-          <img src="assets/images/default.png" *ngIf="!identity.image">
+        <div class="publication-panel-{{p.id}}">
+          <div class="avatar">
+            <img src="{{url_avatar}}/{{p.user.image}}" *ngIf="p.user.image">
+            <img src="assets/images/default.png" *ngIf="!p.user.image">
+          </div>
+          <div class="publication-item-content">
+            <p>
+              <a class="pub-name-link" href="#">{{ p.user.name }} {{ p.user.surname }}</a>
+              -
+              {{ p.user.nick }}
+              -
+              <span class="pub-date">{{ p.createdAt.timestamp | date }}</span>
+            </p>
+            <p>{{ p.text }}</p>
+            <span *ngIf="p.user.id == identity.sub" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true" (click)="deletePublication(p.id)"></span>
+            <a *ngIf="p.document" href="#" class="btn-doc glyphicon glyphicon-save" aria-hidden="true" target="_blank"></a>
+            <span *ngIf="p.image" class="btn-img glyphicon glyphicon-picture" aria-hidden="true"></span>
+            <div class="clearfix"></div>
+            <div class="pub-image">
+              <img src="" alt="">
+            </div>
+            <div class="pull-right like">
+              <span class="btn-like glyphicon glyphicon-heart-empty {{ p.id | test }}"
+              aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+              title="I like"></span>
+            </div>
+            <!--<div class="pull-left like">
+              <span class="btn-unlike active glyphicon glyphicon-heart-empty"
+              aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+              title="I don't like"></span>
+            </div>-->
+          </div>
+          <div class="clearfix"></div>
+          <hr>
         </div>
-        <div class="publication-item-content">
-          <p>
-            <a class="pub-name-link" href="#">{{ p.user.name }} {{ p.user.surname }}</a>
-            -
-            {{ p.user.nick }}
-            -
-            <span class="pub-date">{{ p.createdAt.timestamp | date }}</span>
-          </p>
-          {{ p.text }}
-        </div>
-        <div class="clearfix"></div>
-        <hr>
       </div>
       <div class="clearfix"></div>
       <ul class="pagination">

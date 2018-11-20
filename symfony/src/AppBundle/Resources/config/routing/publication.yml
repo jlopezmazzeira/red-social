@@ -7,3 +7,8 @@ list_publication:
     path:     list
     defaults: { _controller: AppBundle:Publication:list }
     methods: POST
+
+delete_publication:
+    path: /delete/{id}
+    defaults: { _controller: "AppBundle:Publication:delete", id: null }
+    methods: POST

@@ -14,5 +14,8 @@ export var GLOBAL = {
 	url_following: url+'following',
 	url_create: url+'create',
 	url_list: url+'list',
+	url_delete: url+'delete/',
+	url_like: url+'like/',
+	url_unlike: url+'like/',
 	ip: '127.0.0.1',
 };
