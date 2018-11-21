@@ -74,6 +74,7 @@ export class HomeComponent implements OnInit {
         this.publication.message = null;
         this.publication.image = null;
         this.publication.file = null;
+        this.total_publications += 1;
         this.getPublications();
       },
       (error) => {
@@ -167,6 +168,7 @@ export class HomeComponent implements OnInit {
         this.statusPublication = response.status;
         if(this.statusPublication != 'success'){
           this.statusPublication = 'error';
+          //this.total_publications -= 1;
         }
       },
       error => {
@@ -187,6 +189,7 @@ export class HomeComponent implements OnInit {
       response => {
         this.statusPublication = response.status;
         if(this.statusPublication == 'success'){
+          this.total_likes += 1;
           btn_like.style.display = "none";
           btn_unlike.style.display = "block";
         }
@@ -209,6 +212,7 @@ export class HomeComponent implements OnInit {
       response => {
         this.statusPublication = response.status;
         if(this.statusPublication == 'success'){
+          this.total_likes -= 1;
           btn_like.style.display = "block";
           btn_unlike.style.display = "none";
         }
