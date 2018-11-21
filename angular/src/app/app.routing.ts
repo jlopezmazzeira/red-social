@@ -16,7 +16,7 @@ import { HelpComponent } from './components/help/help.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
 
 export const routes: Routes = [
-  { path: '', component: PublicationComponent },
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'home/:page', component: HomeComponent },
   { path: 'login', component: LoginComponent },

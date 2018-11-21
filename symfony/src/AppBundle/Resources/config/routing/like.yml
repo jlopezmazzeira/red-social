@@ -7,3 +7,8 @@ unlike_publication:
     path: /unlike/{id}
     defaults: { _controller: "AppBundle:Like:unlike", id: null }
     methods: POST
+
+likes_publication:
+    path: /likes
+    defaults: { _controller: "AppBundle:Like:likes" }
+    methods: POST

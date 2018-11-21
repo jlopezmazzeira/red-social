@@ -1,14 +1,19 @@
 create_publication:
-    path:     create
+    path:     /create
     defaults: { _controller: AppBundle:Publication:create }
     methods: POST
 
 list_publication:
-    path:     list
+    path:     /list
     defaults: { _controller: AppBundle:Publication:list }
     methods: POST
 
 delete_publication:
     path: /delete/{id}
     defaults: { _controller: "AppBundle:Publication:delete", id: null }
+    methods: POST
+
+publications_publication:
+    path:     /publications
+    defaults: { _controller: AppBundle:Publication:publications }
     methods: POST

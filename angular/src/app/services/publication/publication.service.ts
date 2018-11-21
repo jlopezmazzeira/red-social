@@ -40,34 +40,6 @@ export class PublicationService {
         }
       }
 
-      /*document.getElementById("upload-progress-bar").setAttribute("value", "0");
-      document.getElementById("upload-progress-bar").style.width = "0%";
-
-      xhr.upload.addEventListener("progress", function(event: any){
-        var percent = (event.loaded / event.total) * 100;
-        let prc = Math.round(percent).toString();
-
-        document.getElementById("upload-progress-bar").setAttribute("value", prc);
-        document.getElementById("upload-progress-bar").style.width = prc+"%";
-        document.getElementById("status").innerHTML = Math.round(percent)+" % subido... por favor espera a que termine";
-      }, false);
-
-      xhr.addEventListener("load", function(){
-        document.getElementById("status").innerHTML = "Subida completada";
-        let prc = "100";
-        document.getElementById("upload-progress-bar").setAttribute("value", prc);
-        document.getElementById("upload-progress-bar").setAttribute("aria-valuenow", prc);
-        document.getElementById("upload-progress-bar").style.width = prc+"%";
-      }, false);
-
-      xhr.addEventListener("error", function(){
-        document.getElementById("status").innerHTML = "Error en la subida";
-      }, false);
-
-      xhr.addEventListener("abort", function(){
-        document.getElementById("status").innerHTML = "Subida abortada";
-      }, false);*/
-
       xhr.open("POST", GLOBAL.url_create, true);
       xhr.send(formData);
     });
@@ -89,5 +61,12 @@ export class PublicationService {
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
     return this._http.post(GLOBAL.url_delete+publication_id, params, {headers: headers})
                       .pipe(map(res => res.json()));
+  }
+
+  my_publications(token:string){
+    let params = "authorization="+token;
+    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+    return this._http.post(GLOBAL.url_publications, params, {headers: headers})
+                        .pipe(map(res => res.json()));
   }
 }

@@ -16,6 +16,10 @@ export var GLOBAL = {
 	url_list: url+'list',
 	url_delete: url+'delete/',
 	url_like: url+'like/',
-	url_unlike: url+'like/',
+	url_unlike: url+'unlike/',
+	url_document: url+'uploads/publications/documents/',
+	url_image: url+'uploads/publications/images/',
+	url_likes: url+'likes',
+	url_publications: url+'publications',
 	ip: '127.0.0.1',
 };

@@ -25,7 +25,7 @@ class LikeController extends Controller
     $data = array(
       'status' => 'error',
       'code' => 400,
-      'msg' => 'Publication no created!!'
+      'msg' => 'Error!!'
     );
 
     if ($authCheck == true) {
@@ -38,10 +38,7 @@ class LikeController extends Controller
         ));
 
         $publication_repo = $em->getRepository('BackendBundle:Publication');
-        $publication = $publication_repo->findOneBy(array(
-          "user" => $user,
-          "id" => $id
-        ));
+        $publication = $publication_repo->find($id);
 
         $like = new Like();
         $like->setUser($user);
@@ -52,7 +49,7 @@ class LikeController extends Controller
         $data = array(
           'status' => 'success',
           'code' => 200,
-          'msg' => 'Deleted publication!!'
+          'msg' => 'I like!!'
         );
     } else {
         $data = array(
@@ -74,7 +71,7 @@ class LikeController extends Controller
     $data = array(
       'status' => 'error',
       'code' => 400,
-      'msg' => 'Publication no created!!'
+      'msg' => 'Error!!'
     );
 
     if ($authCheck == true) {
@@ -98,7 +95,7 @@ class LikeController extends Controller
         $data = array(
           'status' => 'success',
           'code' => 200,
-          'msg' => 'Deleted publication!!'
+          'msg' => 'I dont like!!'
         );
     } else {
         $data = array(
@@ -108,6 +105,47 @@ class LikeController extends Controller
         );
     }
 
+    return $helpers->json($data);
+  }
+
+  public function likesAction(Request $request)
+  {
+    $helpers = $this->get("app.helpers");
+
+    $hash = $request->get("authorization", null);
+    $authCheck = $helpers->authCheck($hash);
+
+    $data = array(
+      'status' => 'error',
+      'code' => 400,
+      'msg' => 'Error when trying to stop likes!!'
+    );
+
+    if ($authCheck == true) {
+        $identity = $helpers->authCheck($hash, true);
+        $em = $this->getDoctrine()->getManager();
+        $user_repo = $em->getRepository('BackendBundle:User');
+        $user = $user_repo->findOneBy(array(
+          "id" => $identity->sub
+        ));
+
+        $like_repo = $em->getRepository('BackendBundle:Like');
+        $like = $like_repo->findBy(array(
+          "user" => $user
+        ));
+
+        $data = array(
+          'status' => 'success',
+          'code' => 200,
+          'likes' => $like
+        );
+    } else {
+        $data = array(
+          'status' => $authCheck,
+          'code' => $hash,
+          'msg' => 'authorization not valid!!'
+        );
+    }
     return $helpers->json($data);
   }
 

@@ -2,7 +2,10 @@
   <div id="timeline" class="col-lg-7 box pull-left">
     <h2>{{ sectionTitle }}</h2>
     <hr>
-    <div class="box-content">
+    <div class="loader" *ngIf="loading == 'show'">
+    	<img src="assets/images/ajax-loader.gif">
+    </div>
+    <div class="box-content" *ngIf="publications">
       <div *ngFor="let p of publications" class="publication-item col-lg-12">
         <div class="publication-panel-{{p.id}}">
           <div class="avatar">
@@ -18,23 +21,25 @@
               <span class="pub-date">{{ p.createdAt.timestamp | date }}</span>
             </p>
             <p>{{ p.text }}</p>
-            <span *ngIf="p.user.id == identity.sub" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true" (click)="deletePublication(p.id)"></span>
-            <a *ngIf="p.document" href="#" class="btn-doc glyphicon glyphicon-save" aria-hidden="true" target="_blank"></a>
-            <span *ngIf="p.image" class="btn-img glyphicon glyphicon-picture" aria-hidden="true"></span>
+            <span *ngIf="p.user.id == identity.sub" class="btn-delete-pub glyphicon
+            glyphicon-trash" aria-hidden="true" (click)="deletePublication(p.id)"></span>
+            <a *ngIf="p.document" href="{{url_document}}{{p.document}}" class="btn-doc glyphicon glyphicon-save"
+            aria-hidden="true" target="_blank"></a>
+            <span *ngIf="p.image" class="btn-img glyphicon glyphicon-picture"
+            aria-hidden="true" (click)="showImage(p.id)"></span>
             <div class="clearfix"></div>
-            <div class="pub-image">
-              <img src="" alt="">
-            </div>
             <div class="pull-right like">
-              <span class="btn-like glyphicon glyphicon-heart-empty {{ p.id | test }}"
+              <span id="like-{{p.id}}" class="btn-like glyphicon glyphicon-heart-empty {{ p.id | test }}"
               aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
-              title="I like"></span>
+              title="I like" (click)="likePublication(p.id)"></span>
+              <span id="unlike-{{p.id}}" class="btn-unlike active glyphicon glyphicon-heart-empty"
+              aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+              title="I don't like" (click)="unlikePublication(p.id)"></span>
             </div>
-            <!--<div class="pull-left like">
-              <span class="btn-unlike active glyphicon glyphicon-heart-empty"
-              aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
-              title="I don't like"></span>
-            </div>-->
+            <div id="pub-image-{{p.id}}" class="pub-image" *ngIf="p.image">
+              <img src="{{url_image}}{{p.image}}">
+            </div>
+            <div class="clearfix"></div>
           </div>
           <div class="clearfix"></div>
           <hr>
@@ -73,6 +78,46 @@
       </span>
     </div>
     <div class="clearfix"></div>
+    <div class="following-data">
+      <a href="#">
+        <span class="label-stat">
+          Siguiendo
+        </span>
+        <span class="number-stat">
+          {{ total_following }}
+        </span>
+      </a>
+    </div>
+    <div class="following-data">
+      <a href="#">
+        <span class="label-stat">
+          Seguidores
+        </span>
+        <span class="number-stat">
+          0
+        </span>
+      </a>
+    </div>
+    <div class="following-data">
+      <a href="#">
+        <span class="label-stat">
+          Likes
+        </span>
+        <span class="number-stat">
+          {{ total_likes }}
+        </span>
+      </a>
+    </div>
+    <div class="following-data">
+      <a href="#">
+        <span class="label-stat">
+          Publicaciones
+        </span>
+        <span class="number-stat">
+          {{ total_publications }}
+        </span>
+      </a>
+    </div>
   </div>
   <div id="new-publication" class="col-lg-4 box pull-left">
     <h2>{{ sectionCreatePublication }}</h2>
@@ -85,12 +130,17 @@
       </div>
       <div class="form-group">
         <label for="picture">Picture</label>
-        <input type="file" id="picture" placeholder="Upload Image" class="form-control" (change)="imageChangeEvent($event)">
+        <input type="file" id="picture" name="picture" #picture="ngModel" [(ngModel)]="publication.picture"
+        placeholder="Upload Image" class="form-control" (change)="imageChangeEvent($event)">
       </div>
       <div class="form-group">
         <label for="document">File</label>
-        <input type="file" id="document" placeholder="Upload file" class="form-control" (change)="documentChangeEvent($event)">
+        <input type="file" id="file" name="file" #file="ngModel" [(ngModel)]="publication.file"
+        placeholder="Upload file" class="form-control" (change)="documentChangeEvent($event)">
       </div>
       <button type="submit" class="form-submit btn btn-primary">Submit</button>
     </form>
+    <div class="loader" *ngIf="loading_publication == 'show'">
+      <img src="assets/images/ajax-loader.gif">
+    </div>
   </div>

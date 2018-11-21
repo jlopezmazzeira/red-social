@@ -108,25 +108,17 @@ class PublicationController extends Controller
           "id" => $identity->sub
         ));
 
-        //$json = $request->get("json", null);
-        //$params = json_decode($json);
+        $publication_repo = $em->getRepository('BackendBundle:Publication');
+        $publication = $publication_repo->find($id);
 
-        //if ($json != null) {
-            $publication_repo = $em->getRepository('BackendBundle:Publication');
-            $publication = $publication_repo->find(array(
-              "user" => $user,
-              "id" => $id
-            ));
+        $em->remove($publication);
+        $em->flush();
 
-            $em->remove($publication);
-            $em->flush();
-
-            $data = array(
-              'status' => 'success',
-              'code' => 200,
-              'msg' => 'Deleted publication!!'
-            );
-        //}
+        $data = array(
+          'status' => 'success',
+          'code' => 200,
+          'msg' => 'Deleted publication!!'
+        );
 
     } else {
         $data = array(
@@ -192,6 +184,48 @@ class PublicationController extends Controller
           'items_per_page' => $items_per_page,
           'total_pages' => ceil($total_items_count / $items_per_page),
           'data' => $pagination
+        );
+
+    } else {
+        $data = array(
+          'status' => 'error',
+          'code' => 400,
+          'msg' => 'authorization not valid!!'
+        );
+    }
+
+    return $helpers->json($data);
+  }
+
+  public function publicationsAction(Request $request)
+  {
+    $helpers = $this->get("app.helpers");
+
+    $hash = $request->get("authorization", null);
+    $authCheck = $helpers->authCheck($hash);
+
+    $data = array(
+      'status' => 'error',
+      'code' => 400,
+      'msg' => 'Could not load the posts'
+    );
+
+    if ($authCheck == true) {
+        $identity = $helpers->authCheck($hash, true);
+
+        $em = $this->getDoctrine()->getManager();
+        $user_repo = $em->getRepository('BackendBundle:User');
+        $user = $user_repo->findOneBy(array(
+          "id" => $identity->sub
+        ));
+
+        $publication_repo = $em->getRepository('BackendBundle:Publication');
+        $publications = $publication_repo->findBy(array('user' => $user));
+
+        $data = array(
+          'status' => 'success',
+          'code' => 200,
+          'data' => $publications
         );
 
     } else {

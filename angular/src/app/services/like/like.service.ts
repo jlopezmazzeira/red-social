@@ -11,17 +11,24 @@ export class LikeService {
 
   constructor(private _http: Http) { }
 
-  like_publication(token: string, publication_id: number){
-  	let params = "&authorization="+token;
+  like_publication(token: string, publication_id){
+  	let params = "authorization="+token;
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
     return this._http.post(GLOBAL.url_like+publication_id, params, {headers: headers})
                       .pipe(map(res => res.json()));
   }
 
-  unlike_publication(token: string, publication_id: number){
-  	let params = "&authorization="+token;
+  unlike_publication(token: string, publication_id){
+  	let params = "authorization="+token;
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
     return this._http.post(GLOBAL.url_unlike+publication_id, params, {headers: headers})
+                      .pipe(map(res => res.json()));
+  }
+
+  likes_publication(token: string){
+  	let params = "authorization="+token;
+    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+    return this._http.post(GLOBAL.url_likes, params, {headers: headers})
                       .pipe(map(res => res.json()));
   }
 }
