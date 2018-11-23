@@ -9,6 +9,16 @@ following_unfollow:
     methods: POST
 
 following_following:
-    path:     /following
-    defaults: { _controller: AppBundle:Following:following }
-    methods: POST
+    path:     /following/{nick}
+    defaults: { _controller: AppBundle:Following:following, nick: null }
+    methods: GET
+
+following_followings:
+    path:     /followings/{nick}
+    defaults: { _controller: AppBundle:Following:followings, nick: null }
+    methods: GET
+
+following_followed:
+    path:     /followed/{nick}
+    defaults: { _controller: AppBundle:Following:followed, nick: null }
+    methods: GET

@@ -84,4 +84,9 @@ export class UserService {
     return this._http.get(GLOBAL.url_users+"?page="+page)
                         .pipe(map(res => res.json()));
   }
+
+  profile(nick: string){
+    return this._http.get(GLOBAL.url_profile+nick)
+                      .pipe(map(res => res.json()));
+  }
 }

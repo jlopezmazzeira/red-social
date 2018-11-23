@@ -381,6 +381,42 @@ class UserController extends Controller
     return $helpers->json($data);
 
   }
+
+  public function profileAction(Request $request, $nickname = null)
+  {
+    $helpers = $this->get("app.helpers");
+    
+    $em = $this->getDoctrine()->getManager();
+
+    $user_repo = $em->getRepository('BackendBundle:User');
+    $user = $user_repo->findOneBy(array(
+      "nick" => $nickname
+    ));
+
+    $id = $user->getId();
+    $dql = "SELECT p FROM BackendBundle:Publication p WHERE p.user = $id ORDER BY p.id";
+    $query = $em->CreateQuery($dql);
+
+    $page = $request->query->getInt("page", 1);
+    $paginator = $this->get("knp_paginator");
+    $items_per_page = 6;
+
+    $publications = $paginator->paginate($query, $page, $items_per_page);
+    $total_items_count = $publications->getTotalItemCount();
+
+    $data = array(
+      'status' => 'success',
+      'total_items_count' => $total_items_count,
+      'page_actual' => $page,
+      'items_per_page' => $items_per_page,
+      'total_pages' => ceil($total_items_count / $items_per_page),
+      'publications' => $publications,
+      'user' => $user
+    );
+
+    return $helpers->json($data);
+
+  }
 }
 
 

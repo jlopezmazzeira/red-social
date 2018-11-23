@@ -1,6 +1,58 @@
-<div class="row">
-  <div class="col-lg-12 box">
-    <h2>{{ sectionTitle }}</h2>
-    <hr>
+<div class="col-lg-12 box">
+  <h2>{{ sectionTitle }}</h2>
+  <!--gente que esta siguiendo nickname
+  seguidores de nickname-->
+  <div class="count">
+    <span class="label label-primary">
+      Total of people: {{ total_items }}
+    </span>
   </div>
+  <hr>
+  <div class="box-content box-users">
+    <div class="loader" *ngIf="loading == 'show'">
+      <img src="assets/images/ajax-loader.gif">
+    </div>
+    <div class="col-lg-12 user-item" *ngFor="let user of people">
+      <div class="car-item" *ngIf="user.followed.id != identity.id">
+        <div class="avatar">
+          <img src="{{url_image}}/{{user.followed.image}}" *ngIf="user.followed.image">
+          <img src="assets/images/default.png" *ngIf="!user.followed.image">
+        </div>
+        <div class="user-item-content">
+          <p><a class="user-link" [routerLink]="['/profile', user.followed.nick]">{{ user.followed.name }} {{ user.followed.surname}}</a> - {{ user.followed.nick }}</p>
+          <p>{{ user.followed.bio }}</p>
+        </div>
+        <div class="pull-right buttons-following">
+          <button type="button" id="btn-follow-{{user.id}}" class="btn btn-sm btn-success btn-follow" (click)="follow(user.followed)">
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+            Follow
+          </button>
+          <button type="button" id="btn-unfollow-{{user.id}}" class="btn btn-sm btn-defualt btn-unfollow" (click)="unfollow(user.followed)">
+            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+            Unfollow
+          </button>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <ul class="pagination">
+    <li>
+      <a [routerLink]="['/following', nick, pagePrev]" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor="let page of pages">
+      <a [routerLink]="['/following', nick, page + 1]">
+        <span aria-hidden="true">{{ page + 1 }}</span>
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/following', nick, pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
 </div>

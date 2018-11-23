@@ -29,10 +29,18 @@ export class FollowService {
                       .pipe(map(res => res.json()));
   }
 
-  following_user(token: string){
-    let params = "authorization="+token;
-    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    return this._http.post(GLOBAL.url_following, params, {headers: headers})
+  following_user(nick: string){
+    return this._http.get(GLOBAL.url_following+nick)
+                      .pipe(map(res => res.json()));
+  }
+
+  following(nick: string){
+    return this._http.get(GLOBAL.url_followings+nick)
+                      .pipe(map(res => res.json()));
+  }
+
+  followed(nick: string){
+    return this._http.get(GLOBAL.url_followed+nick)
                       .pipe(map(res => res.json()));
   }
 }

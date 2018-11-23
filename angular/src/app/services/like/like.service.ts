@@ -25,10 +25,8 @@ export class LikeService {
                       .pipe(map(res => res.json()));
   }
 
-  likes_publication(token: string){
-  	let params = "authorization="+token;
-    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    return this._http.post(GLOBAL.url_likes, params, {headers: headers})
+  likes_publication(nick: string){
+    return this._http.get(GLOBAL.url_likes+nick)
                       .pipe(map(res => res.json()));
   }
 }

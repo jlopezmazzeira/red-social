@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
   }
 
   likesPublication(){
-    this._ls.likes_publication(this.token).subscribe(
+    this._ls.likes_publication(this.identity.nick).subscribe(
         response => {
           this.status = response.status;
           if(this.status == "success"){
@@ -260,7 +260,7 @@ export class HomeComponent implements OnInit {
   }
 
   getFollowing(){
-    this._fs.following_user(this.token).subscribe(
+    this._fs.following_user(this.identity.nick).subscribe(
       response => {
         this.status = response.status;
 

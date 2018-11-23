@@ -57,7 +57,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a [routerLink]="['/profile']"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
+              <li><a [routerLink]="['/profile', identity.nick]"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
               <li><a [routerLink]="['/configuration']"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configuration</a></li>
               <li role="separator" class="divider"></li>
               <li><a [routerLink]="['/login', 1]"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
