@@ -1,6 +1,20 @@
 <div class="row">
-  <div class="col-lg-12 box">
+  <div class="col-lg-12 box box-notifications">
     <h2>{{ sectionTitle }}</h2>
     <hr>
+    <div class="content-box">
+      <div class="col-lg-12 notification-item">
+        <div *ngFor="let notification of notifications" class="alert alert-default">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          <span *ngIf="notification.type == 'Following'">
+            user x is following you
+          </span>
+          <span *ngIf="notification.type == 'Like'">
+            user x has liked one of your posts
+          </span>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </div>

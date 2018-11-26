@@ -46,7 +46,11 @@
         </form>
         <ul class="nav navbar-nav navbar-right" *ngIf="identity">
           <li><a [routerLink]="['/messages']"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Private Messages</a></li>
-          <li><a [routerLink]="['/notifications']"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Notifications</a></li>
+          <li><a [routerLink]="['/notifications']">
+            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+            Notifications
+            <span class="label label-success label-notifications" *ngIf="total_notifications > 0">{{ total_notifications }}</span>
+          </a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               {{identity.name}} {{identity.surname}}

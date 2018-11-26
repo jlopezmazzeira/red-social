@@ -44,7 +44,12 @@ class LikeController extends Controller
         $like->setUser($user);
         $like->setPublication($publication);
         $em->persist($like);
-        $em->flush();
+        $flush = $em->flush();
+
+        if ($flush == null) {
+          $notification = $this->get("app.notification");
+          $notification_res = $notification->set($user,'Like',$publication->getUser()->getId(),$publication->getId());
+        }
 
         $data = array(
           'status' => 'success',
@@ -111,7 +116,7 @@ class LikeController extends Controller
   public function likesAction(Request $request, $nick = null)
   {
     $helpers = $this->get("app.helpers");
-    
+
     $data = array(
       'status' => 'error',
       'code' => 400,
@@ -138,7 +143,7 @@ class LikeController extends Controller
     return $helpers->json($data);
   }
 
-  public function followedAction(Request $request, $nick = null)
+  public function likePublicationsAction(Request $request, $nick = null)
   {
     $helpers = $this->get("app.helpers");
 
@@ -148,7 +153,8 @@ class LikeController extends Controller
       "nick" => $nick
     ));
 
-    $dql = "SELECT l FROM BackendBundle:Like l WHERE l.user = $user->getId() ORDER BY l.id";
+    $id = $user->getId();
+    $dql = "SELECT l FROM BackendBundle:Like l WHERE l.user = $id ORDER BY l.id";
     $query = $em->CreateQuery($dql);
 
     $page = $request->query->getInt("page", 1);
@@ -156,7 +162,7 @@ class LikeController extends Controller
     $items_per_page = 6;
 
     $likes = $paginator->paginate($query, $page, $items_per_page);
-    $total_items_count = $pagination->getTotalItemCount();
+    $total_items_count = $likes->getTotalItemCount();
 
     $data = array(
       'status' => 'success',

@@ -28,6 +28,7 @@ import { FollowService } from './services/follow/follow.service';
 import { LikeService } from './services/like/like.service';
 import { MessageService } from './services/message/message.service';
 import { SearchService } from './services/search/search.service';
+import { NotificationService } from './services/notification/notification.service';
 import { DatePipe } from './pipes/date.pipe';
 import { TestPipe } from './pipes/test.pipe';
 import { FollowPipe } from './pipes/follow.pipe';

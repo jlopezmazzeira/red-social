@@ -12,3 +12,8 @@ likes_publication:
     path: /likes/{nick}
     defaults: { _controller: "AppBundle:Like:likes", nick: null }
     methods: GET
+
+mylikes_publication:
+    path: /likes-publications/{nick}
+    defaults: { _controller: "AppBundle:Like:likePublications", nick: null }
+    methods: GET

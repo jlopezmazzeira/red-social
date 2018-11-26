@@ -11,7 +11,7 @@ import { GLOBAL } from '../../services/global';
 })
 export class FollowComponent implements OnInit {
 
-  public sectionTitle = 'Following';
+  public sectionTitle = 'People who follow: ';
   public people;
   public errorMessage;
   public status;
@@ -61,7 +61,6 @@ export class FollowComponent implements OnInit {
             this.status = response.status;
             if(this.status == "success"){
               this.people = response.following;
-              this.hideAll();
               this.total_items = response.total_items_count;
               this.loading = 'hide';
               this.pages = [];
@@ -97,20 +96,23 @@ export class FollowComponent implements OnInit {
     );
   }
 
-  hideAll(){
-    var btn_unfollow = document.getElementsByClassName("btn-unfollow");
-    for(var l = 0; l < btn_unfollow.length; l++)
-        btn_unfollow[l].className += " hidden";
+  unfollow(user){
+    this._fs.unfollow_user(this.token, {following_id:user.followed.id}).subscribe(
+      response => {
+        this.statusUnfollow = response.status;
+        if(this.statusUnfollow == "success"){
+          var panel = document.getElementById("panel-following-"+user.id);
+          panel.className += " hidden";
+          this.total_items -= 1;
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
   }
-
-  showBtn(element: string){
-    var btn = document.getElementById(element);
-    btn.classList.remove("hidden");
-  }
-
-  hideBtn(element: string){
-    var btn = document.getElementById(element);
-    btn.className += " hidden";
-  }
-
 }

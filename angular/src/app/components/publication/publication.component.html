@@ -1,14 +1,17 @@
-<!--<div class="row">-->
-<!--  <div id="timeline" class="col-lg-12 box pull-left">
-    <h2>{{ sectionTitle }}</h2>
-    publicaciones que le gustan
+<div id="timeline" class="col-lg-12 box pull-left">
+    <h2>{{ sectionTitle }} {{nick }}</h2>
+    <div class="count">
+      <span class="label label-primary">
+        Total of publications: {{ total_items }}
+      </span>
+    </div>
     <hr>
     <div class="loader" *ngIf="loading == 'show'">
     	<img src="assets/images/ajax-loader.gif">
     </div>
     <div class="box-content" *ngIf="publications">
       <div *ngFor="let p of publications" class="publication-item col-lg-12">
-        <div class="publication-panel-{{p.id}}">
+        <div id="publication-panel-{{p.publication.id}}">
           <div class="avatar">
             <img src="{{url_avatar}}/{{p.user.image}}" *ngIf="p.user.image">
             <img src="assets/images/default.png" *ngIf="!p.user.image">
@@ -19,26 +22,19 @@
               -
               {{ p.user.nick }}
               -
-              <span class="pub-date">{{ p.createdAt.timestamp | date }}</span>
+              <span class="pub-date">{{ p.publication.createdAt.timestamp | date }}</span>
             </p>
-            <p>{{ p.text }}</p>
-            <span *ngIf="p.user.id == identity.sub" class="btn-delete-pub glyphicon
-            glyphicon-trash" aria-hidden="true" (click)="deletePublication(p.id)"></span>
-            <a *ngIf="p.document" href="{{url_document}}{{p.document}}" class="btn-doc glyphicon glyphicon-save"
-            aria-hidden="true" target="_blank"></a>
-            <span *ngIf="p.image" class="btn-img glyphicon glyphicon-picture"
-            aria-hidden="true" (click)="showImage(p.id)"></span>
+            <p>{{ p.publication.text }}</p>
+            <span *ngIf="p.publication.image" class="btn-img glyphicon glyphicon-picture"
+            aria-hidden="true" (click)="showImage(p.publication.id)"></span>
             <div class="clearfix"></div>
             <div class="pull-right like">
-              <span id="like-{{p.id}}" class="btn-like glyphicon glyphicon-heart-empty {{ p.id | test }}"
+              <span id="unlike-{{p.publication.id}}" class="btn-unlike active glyphicon glyphicon-heart-empty show"
               aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
-              title="I like" (click)="likePublication(p.id)"></span>
-              <span id="unlike-{{p.id}}" class="btn-unlike active glyphicon glyphicon-heart-empty"
-              aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
-              title="I don't like" (click)="unlikePublication(p.id)"></span>
+              title="I don't like" (click)="unlikePublication(p.publication.id)"></span>
             </div>
-            <div id="pub-image-{{p.id}}" class="pub-image" *ngIf="p.image">
-              <img src="{{url_image}}{{p.image}}">
+            <div id="pub-image-{{p.publication.id}}" class="pub-image" *ngIf="p.publication.image">
+              <img src="{{url_image}}{{p.publication.image}}">
             </div>
             <div class="clearfix"></div>
           </div>
@@ -47,22 +43,21 @@
         </div>
       </div>
       <div class="clearfix"></div>
-      <ul class="pagination">
+      <ul class="pagination" *ngIf="publications.length > 0">
         <li>
-          <a [routerLink]="['/home', pagePrev]" aria-label="Previous">
+          <a [routerLink]="['/publication', nick, pagePrev]" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         <li *ngFor="let page of pages">
-          <a [routerLink]="['/home', page + 1]">
+          <a [routerLink]="['/publication', nick, page + 1]">
             <span aria-hidden="true">{{ page + 1 }}</span>
           </a>
         </li>
         <li>
-          <a [routerLink]="['/home', pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
+          <a [routerLink]="['/publication', nick, pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
     </div>
-  </div> -->

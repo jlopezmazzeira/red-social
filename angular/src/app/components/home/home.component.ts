@@ -123,7 +123,6 @@ export class HomeComponent implements OnInit {
                 this.publications = response.data;
                 this.likesPublication();
                 this.total_items = response.total_items_count;
-                this.loading = 'hide';
                 this.pages = [];
                 this.total_pages = response.total_pages;
 
@@ -154,6 +153,7 @@ export class HomeComponent implements OnInit {
         );
       }
     );
+    this.loading = 'hide';
   }
 
   deletePublication(id: number){

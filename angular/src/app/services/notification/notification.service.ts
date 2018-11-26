@@ -7,31 +7,21 @@ import { GLOBAL } from '../global';
 @Injectable({
   providedIn: 'root'
 })
-export class LikeService {
+export class NotificationService {
 
   constructor(private _http: Http) { }
 
-  like_publication(token: string, publication_id){
+  notifications(token: string){
   	let params = "authorization="+token;
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    return this._http.post(GLOBAL.url_like+publication_id, params, {headers: headers})
+    return this._http.post(GLOBAL.url_number_notifications, params, {headers: headers})
                       .pipe(map(res => res.json()));
   }
 
-  unlike_publication(token: string, publication_id){
+  list_notifications(token: string){
   	let params = "authorization="+token;
     let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
-    return this._http.post(GLOBAL.url_unlike+publication_id, params, {headers: headers})
-                      .pipe(map(res => res.json()));
-  }
-
-  likes_publication(nick: string){
-    return this._http.get(GLOBAL.url_likes+nick)
-                      .pipe(map(res => res.json()));
-  }
-
-  mylikes_publication(nick: string){
-    return this._http.get(GLOBAL.url_likes_publications+nick)
+    return this._http.post(GLOBAL.url_notifications, params, {headers: headers})
                       .pipe(map(res => res.json()));
   }
 }

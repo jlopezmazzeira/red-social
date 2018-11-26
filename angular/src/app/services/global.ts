@@ -21,8 +21,11 @@ export var GLOBAL = {
 	url_image: url+'uploads/publications/images/',
 	url_likes: url+'likes/',
 	url_publications: url+'publications',
+	url_likes_publications: url+'likes-publications/',
 	url_profile: url+'profile/',
 	url_followings: url+'followings/',
 	url_followed: url+'followed/',
+	url_number_notifications: url+'notifications/get',
+	url_notifications: url+'notifications',
 	ip: '127.0.0.1',
 };

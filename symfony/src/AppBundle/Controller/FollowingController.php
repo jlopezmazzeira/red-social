@@ -50,7 +50,12 @@ class FollowingController extends Controller
           $following->setFollowed($followed);
 
           $em->persist($following);
-          $em->flush();
+          $flush = $em->flush();
+
+          if ($flush == null) {
+            $notification = $this->get("app.notification");
+            $notification_res = $notification->set($followed,'Following',$user->getId());
+          }
 
           $data = array(
             'status' => 'success',
