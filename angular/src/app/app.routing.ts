@@ -11,6 +11,7 @@ import { PeopleComponent } from './components/people/people.component';
 import { SearchComponent } from './components/search/search.component';
 import { MessageComponent } from './components/message/message.component';
 import { FollowComponent } from './components/follow/follow.component';
+import { FollowedComponent } from './components/followed/followed.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { HelpComponent } from './components/help/help.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
@@ -31,6 +32,8 @@ export const routes: Routes = [
   { path: 'messages', component: MessageComponent },
   { path: 'following/:nick', component: FollowComponent },
   { path: 'following/:nick/:page', component: FollowComponent },
+  { path: 'followed/:nick', component: FollowedComponent },
+  { path: 'followed/:nick/:page', component: FollowedComponent },
   { path: 'publications/:nick', component: PublicationComponent },
   { path: 'publications/:nick/:page', component: PublicationComponent },
   { path: 'search', component: SearchComponent },

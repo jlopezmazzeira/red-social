@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   public likes = null;
   public total_likes = 0;
   public total_following = 0;
+  public total_followed = 0;
   public total_publications = 0;
   public loading;
   public loading_publication;
@@ -61,6 +62,7 @@ export class HomeComponent implements OnInit {
     this.publication = new Publication(1, "", "", "", "");
     this.getPublications();
     this.getFollowing();
+    this.getFollowed();
     this.myPublications();
   }
 
@@ -269,6 +271,17 @@ export class HomeComponent implements OnInit {
           if(following.length != 0){
             this.total_following = following.length;
           }
+        }
+      }
+    );
+  }
+
+  getFollowed(){
+    this._fs.followed(this.identity.nick).subscribe(
+      response => {
+        this.status = response.status;
+        if(this.status == "success"){
+          this.total_followed = response.total_items_count;
         }
       }
     );

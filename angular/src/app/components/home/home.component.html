@@ -88,12 +88,12 @@
       </a>
     </div>
     <div class="following-data">
-      <a href="#">
+      <a [routerLink]="['/followed', identity.nick]">
         <span class="label-stat">
           Followers
         </span>
         <span class="number-stat">
-          0
+          {{ total_followed }}
         </span>
       </a>
     </div>

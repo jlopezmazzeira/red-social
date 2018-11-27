@@ -5,24 +5,32 @@
     <div class="col-lg-6">
       <h4>{{ sectionMessageNew }}</h4>
       <hr>
-      <form>
+      <div class="loader" *ngIf="loading == 'show'">
+      	<img src="assets/images/ajax-loader.gif">
+      </div>
+      <form #createForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="emailUser">To</label>
-          <select class="form-control" name="">
-            <option value="">Choose one</option>
+          <select class="form-control" id="receiver" name="receiver"
+          #receiver="ngModel" [(ngModel)]="message.receiver">
+            <option value="0" selected>Choose one</option>
+            <option *ngFor="let f of following" value="{{f.id}}">{{ f.name }} {{ f.surname }}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="emailUser">Message</label>
-          <textarea class="form-control" name="name" rows="8" cols="80"></textarea>
+          <label for="text">Message</label>
+          <textarea class="form-control" id="text" name="text" rows="8" cols="80"
+          #text="ngModel" [(ngModel)]="message.text"></textarea>
         </div>
         <div class="form-group">
-          <label for="userPassword">Picture</label>
-          <input type="file" name="" value="">
+          <label for="image">Picture</label>
+          <input type="file" id="image" name="image" #image="ngModel" [(ngModel)]="message.image"
+          placeholder="Upload Image" class="form-control" (change)="imageChangeEvent($event)">
         </div>
         <div class="form-group">
-          <label for="userPassword">File</label>
-          <input type="file" name="" value="">
+          <label for="document">File</label>
+          <input type="file" id="file" name="file" #file="ngModel" [(ngModel)]="message.file"
+          placeholder="Upload file" class="form-control" (change)="documentChangeEvent($event)">
         </div>
         <button type="submit" class="form-submit btn btn-primary">Submit</button>
       </form>

@@ -28,12 +28,12 @@
         </a>
       </div>
       <div class="following-data">
-        <a [routerLink]="['/following', person.nick]">
+        <a [routerLink]="['/followed', person.nick]">
           <span class="label-stat">
             Followers
           </span>
           <span class="number-stat">
-            0
+            {{ total_followed }}
           </span>
         </a>
       </div>

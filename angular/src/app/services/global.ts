@@ -27,5 +27,6 @@ export var GLOBAL = {
 	url_followed: url+'followed/',
 	url_number_notifications: url+'notifications/get',
 	url_notifications: url+'notifications',
+	url_message: url+'private-message',
 	ip: '127.0.0.1',
 };

@@ -43,17 +43,13 @@ export class PeopleComponent implements OnInit {
   }
 
   getFollowing(){
-    this._fs.following_user(this.token).subscribe(
+    this._fs.following_user(this.identity.nick).subscribe(
       response => {
         this.status = response.status;
 
         if(this.status == "success"){
           this.following = response.following;
-          if(this.following.length == 0){
-            this.hideAll();
-          } else {
-            this.hideAll();
-
+          if(this.following.length > 0){
             for (var i in this.following){
               let f = +this.following[i].followed.id;
               for(var j in this.people) {
@@ -64,7 +60,6 @@ export class PeopleComponent implements OnInit {
                 }
               }
             }
-
           }
         }
       }
@@ -162,20 +157,14 @@ export class PeopleComponent implements OnInit {
     );
   }
 
-  hideAll(){
-    var btn_unfollow = document.getElementsByClassName("btn-unfollow");
-    for(var l = 0; l < btn_unfollow.length; l++)
-        btn_unfollow[l].className += " hidden";
-  }
-
   showBtn(element: string){
     var btn = document.getElementById(element);
-    btn.classList.remove("hidden");
+    btn.classList.remove("hide");
   }
 
   hideBtn(element: string){
     var btn = document.getElementById(element);
-    btn.className += " hidden";
+    btn.className += " hide";
   }
 
 }

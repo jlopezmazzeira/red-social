@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use BackendBundle\Entity\User;
@@ -385,7 +384,7 @@ class UserController extends Controller
   public function profileAction(Request $request, $nickname = null)
   {
     $helpers = $this->get("app.helpers");
-    
+
     $em = $this->getDoctrine()->getManager();
 
     $user_repo = $em->getRepository('BackendBundle:User');

@@ -16,6 +16,7 @@ import { PeopleComponent } from './components/people/people.component';
 import { SearchComponent } from './components/search/search.component';
 import { MessageComponent } from './components/message/message.component';
 import { FollowComponent } from './components/follow/follow.component';
+import { FollowedComponent } from './components/followed/followed.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { HelpComponent } from './components/help/help.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
@@ -50,6 +51,7 @@ import { LikePipe } from './pipes/like.pipe';
     MessageComponent,
     NotificationComponent,
     FollowComponent,
+    FollowedComponent,
     DatePipe,
     TestPipe,
     FollowPipe,

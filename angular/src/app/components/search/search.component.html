@@ -18,7 +18,7 @@
             <img src="assets/images/default.png" *ngIf="!user.image">
           </div>
           <div class="user-item-content">
-            <p>{{ user.name }} {{ user.surname}} - {{ user.nick }}</p>
+            <p><a class="user-link" [routerLink]="['/profile', user.nick]">{{ user.name }} {{ user.surname}}</a> - {{ user.nick }}</p>
             <p>{{ user.bio }}</p>
           </div>
           <div class="pull-right buttons-following">
@@ -26,7 +26,7 @@
               <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
               Follow
             </button>
-            <button type="button" id="btn-unfollow-{{user.id}}" class="btn btn-sm btn-defualt btn-unfollow" (click)="unfollow(user)">
+            <button type="button" id="btn-unfollow-{{user.id}}" class="btn btn-sm btn-defualt btn-unfollow hide" (click)="unfollow(user)">
               <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
               Unfollow
             </button>

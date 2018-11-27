@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
   public likes = null;
   public total_likes = 0;
   public total_following = 0;
+  public total_followed = 0;
   public total_publications = 0;
   public pages;
   public page_actual;
@@ -77,6 +78,7 @@ export class ProfileComponent implements OnInit {
               this.publications = response.publications;
               this.likesPublication();
               this.getFollowing();
+              this.getFollowed();
               this.total_items = response.total_items_count;
               this.total_publications = this.total_items;
               this.loading = 'hide';
@@ -240,6 +242,17 @@ export class ProfileComponent implements OnInit {
           if(following.length != 0){
             this.total_following = following.length;
           }
+        }
+      }
+    );
+  }
+
+  getFollowed(){
+    this._fs.followed(this.person.nick).subscribe(
+      response => {
+        this.status = response.status;
+        if(this.status == "success"){
+          this.total_followed = response.total_items_count;
         }
       }
     );

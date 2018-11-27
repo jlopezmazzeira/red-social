@@ -28,7 +28,7 @@ export class PublicationService {
 
       formData.append("message", params[2]);
       formData.append("authorization", token);
-      console.log(formData);
+      
       xhr.onreadystatechange = function(){
         if(xhr.readyState == 4){
           if(xhr.status == 200){
