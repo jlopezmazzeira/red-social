@@ -18,7 +18,7 @@
           </div>
           <div class="publication-item-content">
             <p>
-              <a class="pub-name-link" href="#">{{ p.user.name }} {{ p.user.surname }}</a>
+              <a class="pub-name-link" [routerLink]="['/profile', p.user.nick]">{{ p.user.name }} {{ p.user.surname }}</a>
               -
               {{ p.user.nick }}
               -

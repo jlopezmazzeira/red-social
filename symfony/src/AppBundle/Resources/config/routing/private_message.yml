@@ -2,3 +2,18 @@ private_message_index:
     path:     /private-message
     defaults: { _controller: AppBundle:PrivateMessage:index }
     methods: POST
+
+private_message_sended:
+    path:     /sended
+    defaults: { _controller: AppBundle:PrivateMessage:sended }
+    methods: POST
+
+private_message_received:
+    path:     /received
+    defaults: { _controller: AppBundle:PrivateMessage:received }
+    methods: POST
+
+private_message_notreaded:
+    path:     /notreaded
+    defaults: { _controller: AppBundle:PrivateMessage:notReaded }
+    methods: POST

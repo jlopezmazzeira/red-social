@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-lg-12 box">
+    <h2>{{ sectionTitle }}</h2>
+    <hr>
+    <div class="col-lg-6">
+      <a *ngIf="type == 'sended'" class="btn btn-warning" [routerLink]="['/messages']">See received messages</a>
+      <div class="loader" *ngIf="loading == 'show'">
+      	<img src="assets/images/ajax-loader.gif">
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <h4>{{ sectionMessage }}</h4>
+      <hr>
+      <div class="box-content box-message" *ngIf="messages">
+        <div *ngFor="let m of messages" class="publication-item col-lg-12">
+          <div id="message-panel-{{m.id}}">
+            <div class="avatar">
+              <img src="{{url_avatar}}/{{m.receiver.image}}" *ngIf="m.receiver.image">
+              <img src="assets/images/default.png" *ngIf="!m.receiver.image">
+            </div>
+            <div class="publication-item-content">
+              <p>
+                <a class="pub-name-link" [routerLink]="['/profile', m.receiver.nick]">{{ m.receiver.name }} {{ m.receiver.surname }}</a>
+                -
+                {{ m.receiver.nick }}
+                -
+                <span class="pub-date">{{ m.createdAt.timestamp | date }}</span>
+              </p>
+              <p>{{ m.message }}</p>
+              <span *ngIf="m.image" class="btn-img glyphicon glyphicon-picture"
+              aria-hidden="true" (click)="showImage(m.id)"></span>
+              <div class="clearfix"></div>
+              <div id="pub-image-{{m.id}}" class="pub-image" *ngIf="m.image">
+                <img src="{{url_image}}{{m.image}}">
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <ul class="pagination" *ngIf="messages.length > 0">
+          <li>
+            <a [routerLink]="['/private-message', type, pagePrev]" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li *ngFor="let page of pages">
+            <a [routerLink]="['/private-message', type, page + 1]">
+              <span aria-hidden="true">{{ page + 1 }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/private-message', type, pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>

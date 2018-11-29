@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PeopleComponent } from './components/people/people.component';
 import { SearchComponent } from './components/search/search.component';
 import { MessageComponent } from './components/message/message.component';
+import { PrivateMessageComponent } from './components/private-message/private-message.component';
 import { FollowComponent } from './components/follow/follow.component';
 import { FollowedComponent } from './components/followed/followed.component';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -55,7 +56,8 @@ import { LikePipe } from './pipes/like.pipe';
     DatePipe,
     TestPipe,
     FollowPipe,
-    LikePipe
+    LikePipe,
+    PrivateMessageComponent
   ],
   imports: [
     BrowserModule,

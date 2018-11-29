@@ -2,6 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { UserService } from './services/user/user.service';
 import { NotificationService } from './services/notification/notification.service';
+import { MessageService } from './services/message/message.service';
 import { GLOBAL } from './services/global';
 
 @Component({
@@ -16,11 +17,13 @@ export class AppComponent {
   public url_avatar;
   public search_string: string;
   public total_notifications = 0;
+  public total_messages = 0;
   public status;
   public errorMessage;
 
   constructor(private _us: UserService,
               private _ns: NotificationService,
+              private _ms: MessageService,
               private route: ActivatedRoute,
               private router: Router){
   }
@@ -30,8 +33,10 @@ export class AppComponent {
     this.token = this._us.getToken();
     this.url_avatar = GLOBAL.url_avatar;
     this.notifications();
+    this.messages();
     setInterval(() => {
       this.notifications();
+      this.messages();
     }, 3000);
   }
 
@@ -50,6 +55,25 @@ export class AppComponent {
         if(this.status == 'success'){
           let notifications = response.data
           this.total_notifications = notifications.length;
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+            if(this.errorMessage != null){
+              console.log(this.errorMessage);
+              alert('Error en la petición');
+            }
+      }
+    );
+  }
+
+  messages(){
+    this._ms.notreaded_message(this.token).subscribe(
+      response => {
+        this.status = response.status;
+        console.log(this.status);
+        if(this.status == 'success'){
+          this.total_messages = response.data;
         }
       },
       error => {

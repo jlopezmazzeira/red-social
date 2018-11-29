@@ -26,7 +26,7 @@ class PrivateMessageController extends Controller
     $data = array(
       'status' => 'error',
       'code' => 400,
-      'msg' => 'Publication no created!!'
+      'msg' => 'Message no created!!'
     );
 
     if ($authCheck == true) {
@@ -79,7 +79,7 @@ class PrivateMessageController extends Controller
           $data = array(
             'status' => 'success',
             'code' => 200,
-            'msg' => 'New publication created!!'
+            'msg' => 'New message created!!'
           );
       }
     } else {
@@ -91,6 +91,128 @@ class PrivateMessageController extends Controller
     }
 
     return $helpers->json($data);
+  }
+
+  public function sendedAction(Request $request)
+  {
+    $helpers = $this->get('app.helpers');
+    $private_message = $this->getPrivateMessages($request, "sended");
+    return $helpers->json($private_message);
+
+  }
+
+  public function receivedAction(Request $request)
+  {
+    $helpers = $this->get('app.helpers');
+    $private_message = $this->getPrivateMessages($request, "received");
+    return $helpers->json($private_message);
+
+  }
+
+  private function getPrivateMessages($request, $type = null)
+  {
+    $helpers = $this->get('app.helpers');
+
+    $hash = $request->get("authorization", null);
+    $authCheck = $helpers->authCheck($hash);
+
+    if ($authCheck == true) {
+      $identity = $helpers->authCheck($hash, true);
+      $em = $this->getDoctrine()->getManager();
+      $user_repo = $em->getRepository('BackendBundle:User');
+      $user = $user_repo->findOneBy(array(
+        "id" => $identity->sub
+      ));
+
+      $user_id = $identity->sub;
+
+      if ($type == "sended") {
+        $dql = "SELECT p FROM BackendBundle:PrivateMessage p WHERE p.emitter = $user_id ORDER BY p.id DESC";
+      } else {
+        $dql = "SELECT p FROM BackendBundle:PrivateMessage p WHERE p.receiver = $user_id ORDER BY p.id DESC";
+        $this->setReaded($em, $user);
+      }
+
+      $query = $em->createQuery($dql);
+      $paginator = $this->get("knp_paginator");
+      $page = $request->query->getInt('page', 1);
+      $items_per_page = 5;
+      $pagination = $paginator->paginate($query, $page, $items_per_page);
+      $total_items_count = $pagination->getTotalItemCount();
+
+      return $data = array(
+        'status' => 'success',
+        'total_items_count' => $total_items_count,
+        'page_actual' => $page,
+        'items_per_page' => $items_per_page,
+        'total_pages' => ceil($total_items_count / $items_per_page),
+        'data' => $pagination,
+        'type' => $type
+      );
+
+    }
+
+  }
+
+  public function notReadedAction(Request $request)
+  {
+    $helpers = $this->get('app.helpers');
+
+    $hash = $request->get("authorization", null);
+    $authCheck = $helpers->authCheck($hash);
+
+    if ($authCheck == true) {
+      $identity = $helpers->authCheck($hash, true);
+      $em = $this->getDoctrine()->getManager();
+      $user_repo = $em->getRepository('BackendBundle:User');
+      $user = $user_repo->findOneBy(array(
+        "id" => $identity->sub
+      ));
+
+      $message_repo = $em->getRepository('BackendBundle:PrivateMessage');
+      $messages = count($message_repo->findBy(array(
+        "receiver" => $user,
+        "readed" => 0
+      )));
+
+      $data = array(
+        'status' => 'success',
+        'code' => 200,
+        'data' => $messages
+      );
+
+    } else {
+        $data = array(
+          'status' => 'error',
+          'code' => 400,
+          'msg' => 'authorization not valid!!'
+        );
+    }
+
+    return $helpers->json($data);
+  }
+
+  private function setReaded($em, $user)
+  {
+    $message_repo = $em->getRepository('BackendBundle:PrivateMessage');
+    $messages = $message_repo->findBy(array(
+      "receiver" => $user,
+      "readed" => 0
+    ));
+
+    foreach ($messages as $message) {
+      $message->setReaded(1);
+      $em->persist($message);
+    }
+
+    $flush = $em->flush();
+
+    if ($flush == null) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
 }

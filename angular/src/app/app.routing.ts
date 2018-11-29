@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PeopleComponent } from './components/people/people.component';
 import { SearchComponent } from './components/search/search.component';
 import { MessageComponent } from './components/message/message.component';
+import { PrivateMessageComponent } from './components/private-message/private-message.component';
 import { FollowComponent } from './components/follow/follow.component';
 import { FollowedComponent } from './components/followed/followed.component';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -30,6 +31,8 @@ export const routes: Routes = [
   { path: 'people/:page', component: PeopleComponent },
   { path: 'notifications', component: NotificationComponent },
   { path: 'messages', component: MessageComponent },
+  { path: 'messages/:page', component: PrivateMessageComponent },
+  { path: 'private-message/:type', component: PrivateMessageComponent },
   { path: 'following/:nick', component: FollowComponent },
   { path: 'following/:nick/:page', component: FollowComponent },
   { path: 'followed/:nick', component: FollowedComponent },

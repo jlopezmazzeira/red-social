@@ -28,5 +28,8 @@ export var GLOBAL = {
 	url_number_notifications: url+'notifications/get',
 	url_notifications: url+'notifications',
 	url_message: url+'private-message',
+	url_sended: url+'sended',
+	url_received: url+'received',
+	url_notreaded: url+'notreaded',
 	ip: '127.0.0.1',
 };

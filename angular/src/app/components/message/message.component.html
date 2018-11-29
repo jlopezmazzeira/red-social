@@ -11,8 +11,8 @@
       <form #createForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="emailUser">To</label>
-          <select class="form-control" id="receiver" name="receiver"
-          #receiver="ngModel" [(ngModel)]="message.receiver">
+          <select class="form-control" id="emitter" name="emitter"
+          #emitter="ngModel" [(ngModel)]="message.emitter">
             <option value="0" selected>Choose one</option>
             <option *ngFor="let f of following" value="{{f.id}}">{{ f.name }} {{ f.surname }}</option>
           </select>
@@ -34,16 +34,57 @@
         </div>
         <button type="submit" class="form-submit btn btn-primary">Submit</button>
       </form>
-      <button class="btn btn-warning" type="button" name="button">See sent messages</button>
-      <button class="btn btn-warning" type="button" name="button">See received messages</button>
+      <a class="btn btn-warning" [routerLink]="['/private-message', 'sended']">See sent messages</a>
     </div>
     <div class="col-lg-6">
-      <h4>{{ sectionMessageReceived }}</h4>
+      <h4>{{ sectionMessage }}</h4>
       <hr>
-    </div>
-    <div class="col-lg-6">
-      <h4>{{ sectionMessageSent }}</h4>
-      <hr>
+      <div class="box-content box-message" *ngIf="messages">
+        <div *ngFor="let m of messages" class="publication-item col-lg-12">
+          <div id="message-panel-{{m.id}}">
+            <div class="avatar">
+              <img src="{{url_avatar}}/{{m.emitter.image}}" *ngIf="m.emitter.image">
+              <img src="assets/images/default.png" *ngIf="!m.emitter.image">
+            </div>
+            <div class="publication-item-content">
+              <p>
+                <a class="pub-name-link" [routerLink]="['/profile', m.emitter.nick]">{{ m.emitter.name }} {{ m.emitter.surname }}</a>
+                -
+                {{ m.emitter.nick }}
+                -
+                <span class="pub-date">{{ m.createdAt.timestamp | date }}</span>
+              </p>
+              <p>{{ m.message }}</p>
+              <span *ngIf="m.image" class="btn-img glyphicon glyphicon-picture"
+              aria-hidden="true" (click)="showImage(m.id)"></span>
+              <div class="clearfix"></div>
+              <div id="pub-image-{{m.id}}" class="pub-image" *ngIf="m.image">
+                <img src="{{url_image}}{{m.image}}">
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <ul class="pagination" *ngIf="messages.length > 0">
+          <li>
+            <a [routerLink]="['/messages', pagePrev]" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li *ngFor="let page of pages">
+            <a [routerLink]="['/messages', page + 1]">
+              <span aria-hidden="true">{{ page + 1 }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/messages', pageNext]" aria-label="Next" [ngClass]="[total_pages == 1 ? 'hide' : 'show', 'next-link'] ">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
     </div>
   </div>
 </div>
