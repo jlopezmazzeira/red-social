@@ -34,8 +34,11 @@ export class PrivateMessageComponent implements OnInit {
 
   ngOnInit() {
     this.loading = 'show';
-    this.token = this._us.getToken();
     this.identity = this._us.getIdentity();
+    if(!this.identity){
+      this.router.navigate(["/login"]);
+    }
+    this.token = this._us.getToken();
     this.route.params.subscribe(
       params => {
         let page = +params["page"];

@@ -42,12 +42,15 @@ export class PublicationComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.identity = this._us.getIdentity();
+    if(!this.identity){
+      this.router.navigate(["/login"]);
+    }
     this.url_avatar = GLOBAL.url_avatar;
     this.url_document = GLOBAL.url_document;
     this.url_image = GLOBAL.url_image;
     this.loading = 'show';
     this.token = this._us.getToken();
-    this.identity = this._us.getIdentity();
     this.getLikes();
   }
 

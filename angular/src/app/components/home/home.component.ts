@@ -54,6 +54,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loading = 'show';
     let identity = this._us.getIdentity();
+    if(!identity){
+      this.router.navigate(["/login"]);
+    }
     this.identity = identity;
     this.token = this._us.getToken();
     this.url_avatar = GLOBAL.url_avatar;

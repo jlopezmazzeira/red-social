@@ -37,9 +37,12 @@ export class FollowComponent implements OnInit {
 
   ngOnInit() {
     this.loading = 'show';
+    this.identity = this._us.getIdentity();
+    if(!this.identity){
+      this.router.navigate(["/login"]);
+    }
     this.url_image = GLOBAL.url_avatar;
     this.token = this._us.getToken();
-    this.identity = this._us.getIdentity();
     this.getFollowing();
   }
 

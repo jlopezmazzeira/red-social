@@ -27,6 +27,9 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit() {
     this.identity = this._us.getIdentity();
+    if(!this.identity){
+      this.router.navigate(["/login"]);
+    }
     this.token = this._us.getToken();
     this.url_avatar = GLOBAL.url_avatar;
     this.listNotifications();

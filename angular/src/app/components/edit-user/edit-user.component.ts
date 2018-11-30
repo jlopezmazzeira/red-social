@@ -31,7 +31,7 @@ export class EditUserComponent implements OnInit {
       this.identity = identity;
 
       if(identity == null){
-        this.router.navigate(["/index"]);
+        this.router.navigate(["/login"]);
       } else {
 
         this.person = new Person(identity.sub,

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     let ide = this._us.getIdentity();
     if(ide != null && ide.sub){
-      this.router.navigate(["/index"]);
+      this.router.navigate(["/home"]);
     }
   }
 

@@ -39,6 +39,9 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.loading = 'show';
     this.identity = this._us.getIdentity();
+    if(!this.identity){
+      this.router.navigate(["/login"]);
+    }
     this.token = this._us.getToken();
     this.url_image = GLOBAL.url_avatar;
     this.getSearchPeople();

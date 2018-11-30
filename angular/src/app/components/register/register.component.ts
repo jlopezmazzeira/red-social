@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     this.person = new Person(1, "user", "", "", "", "", "", "", "", "");
     let ide = this._us.getIdentity();
     if(ide != null && ide.sub){
-      this.router.navigate(["/profile"]);
+      this.router.navigate(["/profile", ide.nick]);
     }
   }
 
