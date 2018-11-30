@@ -25,6 +25,8 @@
               <span class="pub-date">{{ p.publication.createdAt.timestamp | date }}</span>
             </p>
             <p>{{ p.publication.text }}</p>
+            <a *ngIf="p.publication.document" href="{{url_document}}{{p.publication.document}}" class="btn-doc glyphicon glyphicon-save"
+            aria-hidden="true" target="_blank"></a>
             <span *ngIf="p.publication.image" class="btn-img glyphicon glyphicon-picture"
             aria-hidden="true" (click)="showImage(p.publication.id)"></span>
             <div class="clearfix"></div>

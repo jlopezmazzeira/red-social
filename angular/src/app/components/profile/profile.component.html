@@ -8,6 +8,18 @@
       <img src="assets/images/default.png" *ngIf="!person.image">
     </div>
     <div class="name-surname">
+      <div class="buttons-following" *ngIf="person.id != identity.sub">
+        <button *ngIf="following" type="button" class="btn btn-defualt btn-sm disable">Te sigue</button>
+        <button *ngIf="!following" type="button" class="btn btn-defualt btn-sm disable">No te sigue</button>
+        <button *ngIf="!following" type="button" id="btn-follow-{{person.id}}" class="btn btn-sm btn-success btn-follow" (click)="follow(person)">
+          <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+          Follow
+        </button>
+        <button *ngIf="following" type="button" id="btn-unfollow-{{person.id}}" class="btn btn-sm btn-defualt btn-unfollow" (click)="unfollow(person)">
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+          Unfollow
+        </button>
+      </div>
       <h2>{{ person.name }} {{ person.surname }}</h2>
       <div class="clearfix"></div>
       <span class="nickname">{{ person.nick }}</span>

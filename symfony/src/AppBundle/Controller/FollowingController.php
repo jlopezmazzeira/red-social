@@ -227,6 +227,59 @@ class FollowingController extends Controller
 
   }
 
+  public function verifyFollowAction(Request $request)
+  {
+    $helpers = $this->get("app.helpers");
+
+    $hash = $request->get("authorization", null);
+    $authCheck = $helpers->authCheck($hash);
+
+    $data = array(
+      'status' => 'error',
+      'code' => 400,
+      'msg' => 'Error'
+    );
+
+    if ($authCheck == true) {
+        $identity = $helpers->authCheck($hash, true);
+
+        $em = $this->getDoctrine()->getManager();
+        $user_repo = $em->getRepository('BackendBundle:User');
+        $user = $user_repo->findOneBy(array(
+          "id" => $identity->sub
+        ));
+
+        $json = $request->get("json", null);
+        $params = json_decode($json);
+
+        if ($json != null) {
+          $following_repo = $em->getRepository('BackendBundle:Following');
+          $followed = $following_repo->findOneBy(array(
+            "user" => $user,
+            "followed" => $params->follow_id
+          ));
+          $follow = false;
+
+          if (is_object($followed)) {
+            $follow = true;
+          }
+          $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'follow' => $follow
+          );
+        }
+    } else {
+        $data = array(
+          'status' => $authCheck,
+          'code' => $hash,
+          'msg' => 'authorization not valid!!'
+        );
+    }
+
+    return $helpers->json($data);
+  }
+
 }
 
 

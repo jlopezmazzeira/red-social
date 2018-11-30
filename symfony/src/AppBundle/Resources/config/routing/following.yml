@@ -22,3 +22,8 @@ following_followed:
     path:     /followed/{nick}
     defaults: { _controller: AppBundle:Following:followed, nick: null }
     methods: GET
+
+following_verify_follow:
+    path:     /verify-follow
+    defaults: { _controller: AppBundle:Following:verifyFollow }
+    methods: POST

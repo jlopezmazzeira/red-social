@@ -80,7 +80,6 @@ export class PrivateMessageComponent implements OnInit {
           } else {
             this.pageNext = page;
           }
-          console.log(this.messages);
           this.loading = 'hide';
         }
       },

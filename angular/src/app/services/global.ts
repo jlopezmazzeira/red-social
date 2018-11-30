@@ -31,5 +31,6 @@ export var GLOBAL = {
 	url_sended: url+'sended',
 	url_received: url+'received',
 	url_notreaded: url+'notreaded',
+	url_verify_following: url+'verify-follow',
 	ip: '127.0.0.1',
 };

@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
   public show_image = 'hide';
   public token;
   public identity;
+  public following = false;
 
   constructor(private _us: UserService,
               private _fs: FollowService,
@@ -85,6 +86,10 @@ export class ProfileComponent implements OnInit {
               this.pages = [];
               this.total_pages = response.total_pages;
 
+              if(this.person.id != this.identity.sub){
+                  this.verifyFollow();
+              }
+
               for(let i = 0; i < response.total_pages; i++){
                 this.pages.push(i);
               }
@@ -113,6 +118,17 @@ export class ProfileComponent implements OnInit {
         );
       }
     );
+  }
+
+  verifyFollow(){
+      this._fs.verify_following(this.token, {follow_id: this.person.id}).subscribe(
+        response => {
+          this.status = response.status;
+          if(this.status == "success"){
+            this.following = response.follow;
+          }
+        }
+      );
   }
 
   showImage(id: number){
@@ -256,6 +272,56 @@ export class ProfileComponent implements OnInit {
         }
       }
     );
+  }
+
+  follow(followed){
+    this._fs.follow_user(this.token, {following_id:followed.id}).subscribe(
+      response => {
+        this.status = response.status;
+
+        if(this.status == "success"){
+          this.hideBtn("btn-follow-"+followed.id);
+          this.showBtn("btn-unfollow-"+followed.id);
+        }
+
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
+  }
+
+  unfollow(followed){
+    this._fs.unfollow_user(this.token, {following_id:followed.id}).subscribe(
+      response => {
+        this.status = response.status;
+        if(this.status == "success"){
+          this.showBtn("btn-follow-"+followed.id);
+          this.hideBtn("btn-unfollow-"+followed.id);
+        }
+      },
+      error => {
+        this.errorMessage = <any>error;
+        if(this.errorMessage != null){
+          console.log(this.errorMessage);
+          alert('Error en la petición');
+        }
+      }
+    );
+  }
+
+  showBtn(element: string){
+    var btn = document.getElementById(element);
+    btn.classList.remove("hide");
+  }
+
+  hideBtn(element: string){
+    var btn = document.getElementById(element);
+    btn.className += " hide";
   }
 
 }

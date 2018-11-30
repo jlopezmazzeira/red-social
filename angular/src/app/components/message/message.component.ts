@@ -34,6 +34,8 @@ export class MessageComponent implements OnInit {
   public pageNext = 1;
   public total_items = 0;
   public total_pages = 0;
+  public url_document;
+  public url_image;
 
   constructor(private _us: UserService,
               private _fs: FollowService,
@@ -46,6 +48,8 @@ export class MessageComponent implements OnInit {
     this.token = this._us.getToken();
     this.identity = this._us.getIdentity();
     this.url_avatar = GLOBAL.url_avatar;
+    this.url_document = GLOBAL.url_document;
+    this.url_image = GLOBAL.url_image;
     this.message = new Message(1, 0,"", "", "", 0);
     this.getMessagesReceived();
     this.getFollowing();

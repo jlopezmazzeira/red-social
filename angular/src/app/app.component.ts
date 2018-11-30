@@ -32,12 +32,14 @@ export class AppComponent {
     this.identity = this._us.getIdentity();
     this.token = this._us.getToken();
     this.url_avatar = GLOBAL.url_avatar;
-    this.notifications();
-    this.messages();
-    setInterval(() => {
+    if(this.identity){
       this.notifications();
       this.messages();
-    }, 3000);
+      setInterval(() => {
+        this.notifications();
+        this.messages();
+      }, 3000);
+    }
   }
 
   search(){
@@ -71,7 +73,6 @@ export class AppComponent {
     this._ms.notreaded_message(this.token).subscribe(
       response => {
         this.status = response.status;
-        console.log(this.status);
         if(this.status == 'success'){
           this.total_messages = response.data;
         }

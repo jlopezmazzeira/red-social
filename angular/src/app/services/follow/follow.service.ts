@@ -43,4 +43,13 @@ export class FollowService {
     return this._http.get(GLOBAL.url_followed+nick)
                       .pipe(map(res => res.json()));
   }
+
+  verify_following(token: string, follow){
+    let json = follow;
+    let params = JSON.stringify(json);
+    params = "json="+params+"&authorization="+token;
+    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+    return this._http.post(GLOBAL.url_verify_following, params, {headers: headers})
+                      .pipe(map(res => res.json()));
+  }
 }

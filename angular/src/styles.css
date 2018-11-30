@@ -209,6 +209,10 @@ body{
   margin-bottom: 20px;
 }
 
+.profile-box .buttons-following{
+  margin-top: 20px;
+}
+
 .profile-box #user_stats{
   margin: 0px auto;
   margin-bottom: 20px;
@@ -233,4 +237,8 @@ body{
 
 .profile-box #user_stats .number-stat{
   font-weight: bold;
+}
+
+.see-message{
+  margin-top: 10px;
 }

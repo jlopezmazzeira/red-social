@@ -34,7 +34,7 @@
         </div>
         <button type="submit" class="form-submit btn btn-primary">Submit</button>
       </form>
-      <a class="btn btn-warning" [routerLink]="['/private-message', 'sended']">See sent messages</a>
+      <a class="btn btn-warning see-message" [routerLink]="['/private-message', 'sended']">See sent messages</a>
     </div>
     <div class="col-lg-6">
       <h4>{{ sectionMessage }}</h4>
@@ -55,12 +55,10 @@
                 <span class="pub-date">{{ m.createdAt.timestamp | date }}</span>
               </p>
               <p>{{ m.message }}</p>
-              <span *ngIf="m.image" class="btn-img glyphicon glyphicon-picture"
-              aria-hidden="true" (click)="showImage(m.id)"></span>
-              <div class="clearfix"></div>
-              <div id="pub-image-{{m.id}}" class="pub-image" *ngIf="m.image">
-                <img src="{{url_image}}{{m.image}}">
-              </div>
+              <a *ngIf="m.file" href="{{url_document}}{{m.document}}" class="btn-doc glyphicon glyphicon-save"
+              aria-hidden="true" target="_blank"></a>
+              <a *ngIf="m.image" href="{{url_image}}{{m.image}}" class="btn-img glyphicon glyphicon-picture"
+              aria-hidden="true" target="_blank"></a>
               <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
